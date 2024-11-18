@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Página Principal";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+        }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                margin: 10px 0;
+                display: block;
+                font-size: 1.2rem;
+            }
+
+                .sidebar a:hover {
+                    text-decoration: underline;
+                }
+
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+        }
+
+        .btn-option {
+            width: 200px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-paw"></i> Puma Pardo
+        </div>
+        <hr />
+        <a href="/Home/CierreCaja"><i class="fas fa-cash-register"></i> Cierre de Caja</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <h1 class="text-center mb-4">Bienvenido a Puma Pardo</h1>
+        <p class="text-center">Selecciona una opción para continuar:</p>
+
+        <div class="d-flex justify-content-center gap-4 mt-4">
+            <a href="/Home/Oficina" class="btn btn-primary btn-option shadow">
+                <i class="fas fa-building fa-2x mb-2"></i>
+                <br /> Oficina
+            </a>
+            <a href="/Home/Boleteria" class="btn btn-success btn-option shadow">
+                <i class="fas fa-ticket-alt fa-2x mb-2"></i>
+                <br /> Boletería
+            </a>
+        </div>
+    </div>
+</body>
+</html>

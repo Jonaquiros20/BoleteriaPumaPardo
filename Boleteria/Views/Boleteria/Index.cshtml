@@ -1,0 +1,199 @@
+﻿@{
+    ViewData["Title"] = "Boletería";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid my-4">
+        <!-- Barra Horizontal Superior -->
+        <div class="bg-dark text-white d-flex justify-content-between align-items-center px-4 py-2">
+            <a href="/" class="text-white text-decoration-none">
+                <i class="fas fa-home"></i> Inicio
+            </a>
+            <h1 class="h5 m-0">Boletería</h1>
+            <img src="/images/logo.png" alt="Logo" style="height: 40px;">
+        </div>
+
+        <div class="container">
+            <h3 class="text-center">Bienvenido, @ViewBag.Vendedor</h3>
+            <p class="text-center">Vendedor activo hasta que cierre el sistema.</p>
+        </div>
+
+        <!-- Lista de Rutas Horizontales -->
+        <ul class="nav nav-tabs justify-content-center my-3">
+            <li class="nav-item">
+                <button class="nav-link active" onclick="cargarHorarios('Alegria')">Siquirres-La Alegría</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="cargarHorarios('Cairo')">Siquirres-Cairo</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="cargarHorarios('PortonIberia')">Siquirres-Portón Iberia</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" onclick="cargarHorarios('6Amigos')">Siquirres-6 Amigos</button>
+            </li>
+        </ul>
+
+        <!-- Botón para habilitar todos los horarios -->
+        <div class="text-center my-3">
+            <button class="btn btn-primary" onclick="habilitarTodos()">Habilitar Todos los Tiquetes</button>
+        </div>
+
+        <!-- Contenedor dinámico de horarios -->
+        <div id="horarios-container" class="d-flex flex-wrap justify-content-center">
+            <!-- Horarios cargados dinámicamente aquí -->
+        </div>
+    </div>
+
+    <!-- Modal para seleccionar ruta -->
+    <div class="modal fade" id="rutasModal" tabindex="-1" aria-labelledby="rutasModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rutasModalLabel">Seleccione una Ruta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="rutas-list" class="list-group">
+                        <!-- Rutas dinámicas cargadas aquí -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="number" id="cantidadInput" class="form-control" placeholder="Cantidad de Tiquetes" min="1">
+                    <button id="confirmarCantidadBtn" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Funcionalidad JavaScript -->
+    <script>
+        const horarios = {
+            Alegria: {
+                LunesSabado: [
+                    { hora: "5:25 AM", activo: true },
+                    { hora: "6:10 AM", activo: true },
+                    { hora: "9:10 AM", activo: true }
+                ],
+                Domingo: [
+                    { hora: "7:10 AM", activo: true },
+                    { hora: "9:10 AM", activo: true }
+                ]
+            },
+            Cairo: [],
+            PortonIberia: [],
+            Amigos: []
+        };
+
+        const rutas = [
+            { nombre: "Siq-CairoPista", precio: 500 },
+            { nombre: "Siq-La Francia", precio: 500 },
+            { nombre: "Siq-Herediana", precio: 500 },
+            { nombre: "Siq-Y.Griega", precio: 500 },
+            { nombre: "Siq-San Isidro", precio: 500 },
+            { nombre: "Siq-VillaBonita", precio: 500 },
+            { nombre: "Siq-Cruce", precio: 500 },
+            { nombre: "Siq-Alegria", precio: 500 },
+            { nombre: "Siq-Lomas", precio: 500 },
+        ];
+
+        let horarioSeleccionado = null;
+        let rutaSeleccionada = null;
+
+        function cargarHorarios(ruta) {
+            const container = document.getElementById("horarios-container");
+            container.innerHTML = "";
+
+            const hoy = new Date();
+            const dia = hoy.getDay(); // 0 = Domingo, 1 = Lunes...
+
+            let horariosRuta =
+                dia === 0
+                    ? horarios[ruta]?.Domingo || []
+                    : horarios[ruta]?.LunesSabado || [];
+
+            horariosRuta.forEach((horario) => {
+                const horarioElement = document.createElement("button");
+                horarioElement.classList.add("btn", "btn-outline-primary", "m-2");
+                horarioElement.disabled = !horario.activo;
+                horarioElement.textContent = horario.hora;
+
+                horarioElement.onclick = function () {
+                    horarioSeleccionado = horario.hora;
+                    mostrarRutasModal();
+                };
+
+                container.appendChild(horarioElement);
+            });
+        }
+
+        function mostrarRutasModal() {
+            const rutasList = document.getElementById("rutas-list");
+            rutasList.innerHTML = "";
+
+            rutas.forEach((ruta) => {
+                const rutaElement = document.createElement("div");
+                rutaElement.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+                rutaElement.innerHTML = `
+                            <span>${ruta.nombre}</span>
+                            <span class="badge bg-primary">${ruta.precio} colones</span>
+                        `;
+                rutaElement.onclick = function () {
+                    rutaSeleccionada = ruta.nombre;
+                    Array.from(rutasList.children).forEach((child) =>
+                        child.classList.remove("bg-light", "border")
+                    );
+                    rutaElement.classList.add("bg-light", "border");
+                };
+                rutasList.appendChild(rutaElement);
+            });
+
+            const rutasModal = new bootstrap.Modal(document.getElementById("rutasModal"));
+            rutasModal.show();
+        }
+
+        document.getElementById("confirmarCantidadBtn").onclick = function () {
+            const cantidad = document.getElementById("cantidadInput").value;
+            if (cantidad && cantidad > 0 && rutaSeleccionada) {
+                const vendedor = "@ViewBag.Vendedor";
+                const url = `/ImprimirTiquete?ruta=${rutaSeleccionada}&horario=${horarioSeleccionado}&subRuta=${rutaSeleccionada}&cantidad=${cantidad}`;
+                window.location.href = url;
+            } else {
+                alert("Por favor seleccione una ruta y una cantidad válida.");
+            }
+        };
+
+
+        function habilitarTodos() {
+            Object.keys(horarios).forEach((ruta) => {
+                ["LunesSabado", "Domingo"].forEach((tipoDia) => {
+                    if (horarios[ruta]?.[tipoDia]) {
+                        horarios[ruta][tipoDia].forEach((h) => (h.activo = true));
+                    }
+                });
+            });
+            alert("Todos los horarios han sido habilitados");
+            cargarHorarios("Alegria"); // Recargar para ver cambios
+        }
+
+        // Cargar horarios por defecto
+        cargarHorarios("Alegria");
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Imprimir Tiquete";
+}
+
+<div class="container my-5">
+    <h1 class="text-center">Tiquete Generado</h1>
+    <hr>
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <h5 class="card-title">Detalles del Tiquete</h5>
+            <p><strong>Vendedor:</strong> @ViewBag.Vendedor</p>
+            <p><strong>Ruta:</strong> @ViewBag.Ruta</p>
+            <p><strong>Horario:</strong> @ViewBag.Horario</p>
+            <p><strong>Sub-Ruta:</strong> @ViewBag.SubRuta</p>
+            <p><strong>Cantidad de Tiquetes:</strong> @ViewBag.Cantidad</p>
+            <p><strong>Precio Total:</strong> @ViewBag.PrecioTotal colones</p>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <a href="/" class="btn btn-secondary">Volver al inicio</a>
+    </div>
+</div>

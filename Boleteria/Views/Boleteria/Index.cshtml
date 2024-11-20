@@ -11,21 +11,28 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @* <style>
+        /* Ocultar los totales durante la impresión */
+        @media print {
+            #totales {
+                display: none;
+            }
+        }
+    </style> *@
 </head>
 <body>
     <div class="container my-4">
         <h1 class="text-center">Boletería</h1>
 
-        <!-- Resumen de totales -->
-        <div class="my-4 text-center">
-            <p><strong>Total Tiquetes Vendidos:</strong> @ViewBag.TotalTiquetes</p>
-            <p><strong>Total Dinero Recaudado:</strong> @ViewBag.TotalDinero colones</p>
+        <!-- Sección de Totales -->
+        <div id="totales" class="mb-4 text-center">
+            <h4 class="text-success">Totales</h4>
+            <p><strong>Total de Tiquetes Vendidos:</strong> <span id="totalTiquetes">0</span></p>
+            <p><strong>Total Acumulado en Colones:</strong> <span id="totalDinero">0</span></p>
         </div>
 
         <!-- Formulario para ingresar datos de la compra -->
-        <form asp-action="ImprimirTiquete" method="get" class="p-4 bg-light border rounded">
+        <form id="formularioTiquetes" class="p-4 bg-light border rounded">
             <h3 class="text-center mb-4">Generar Tiquete</h3>
 
             <!-- Selección de ruta -->
@@ -38,119 +45,145 @@
                 </select>
             </div>
 
-            <!-- Subrutas dinámicas -->
-            <div class="mb-3">
-                <label for="subRuta" class="form-label">SubRuta</label>
-                <select id="subRuta" name="subRuta" class="form-select" required>
-                    <option value="">Seleccione una subruta</option>
-                    <option value="Cairo M">Cairo</option>
-                    <option value="Herediana">Herediana</option>
-                    <option value="7:10 AM">7:10 AM</option>
-                    <option value="8:10 AM">8:10 AM</option>
-                    <option value="9:10 AM">9:10 AM</option>
-                    <option value="10:10 AM">10:10 AM</option>
-                    <option value="11:10 AM">11:10 AM</option>
-                    <option value="12:10 PM">12:10 PM</option>
-                    <option value="1:10 PM">1:10 PM</option>
-                    <option value="2:10 PM">2:10 PM</option>
-                    <option value="3:10 PM">3:10 PM</option>
-                    <option value="4:10 PM">4:10 PM</option>
-                    <option value="5:10 PM">5:10 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="6:45 PM">6:45 PM</option>
-                    <option value="7:30 PM">7:30 PM</option>
-                </select>
+            <!-- Lista dinámica de precios y subrutas -->
+            <div id="preciosSubRutas" class="mb-3" style="display: none;">
+                <h5 class="text-center">Precios por SubRuta</h5>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Cairo</span>
+                        <span class="price-label">335 colones</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>La Alegría</span>
+                        <span class="price-label">495 colones</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Las Lomas</span>
+                        <span class="price-label">885 colones</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>San Isidro</span>
+                        <span class="price-label">385 colones</span>
+                    </li>
+                </ul>
             </div>
 
-            <!-- Horario -->
+            <!-- Selección de subruta -->
             <div class="mb-3">
-                <label for="horario" class="form-label">Horario</label>
-                <select id="horario" name="horario" class="form-select" required>
-                    <option value="5:30 AM">5:30 AM</option>
-                    <option value="6:10 AM">6:10 AM</option>
-                    <option value="7:10 AM">7:10 AM</option>
-                    <option value="8:10 AM">8:10 AM</option>
-                    <option value="9:10 AM">9:10 AM</option>
-                    <option value="10:10 AM">10:10 AM</option>
-                    <option value="11:10 AM">11:10 AM</option>
-                    <option value="12:10 PM">12:10 PM</option>
-                    <option value="1:10 PM">1:10 PM</option>
-                    <option value="2:10 PM">2:10 PM</option>
-                    <option value="3:10 PM">3:10 PM</option>
-                    <option value="4:10 PM">4:10 PM</option>
-                    <option value="5:10 PM">5:10 PM</option>
-                    <option value="6:00 PM">6:00 PM</option>
-                    <option value="6:45 PM">6:45 PM</option>
-                    <option value="7:30 PM">7:30 PM</option>
+                <label for="subRuta" class="form-label">SubRuta</label>
+                <select id="subRuta" name="subRuta" class="form-select" disabled required>
+                    <option value="">Seleccione una subruta</option>
                 </select>
             </div>
 
             <!-- Cantidad de tiquetes -->
             <div class="mb-3">
                 <label for="cantidad" class="form-label">Cantidad de Tiquetes</label>
-                <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Ingrese la cantidad" min="1" required>
+                <select id="cantidad" name="cantidad" class="form-select" disabled required>
+                    <option value="">Seleccione la cantidad</option>
+                </select>
             </div>
 
-            <!-- Botón de imprimir -->
+            <!-- Botón para generar tiquete -->
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Vista previa e Imprimir</button>
+                <button type="button" id="btnImprimir" class="btn btn-primary" disabled>Generar e Imprimir Tiquete</button>
             </div>
         </form>
     </div>
 
-    <!-- Script para manejar subrutas dinámicas -->
+    <!-- Script para manejar lógica de rutas, totales e impresión -->
     <script>
-        document.getElementById('ruta').addEventListener('change', function () {
-            const rutaSeleccionada = this.value;
-            const subRutaSelect = document.getElementById('subRuta');
+        const rutaSelect = document.getElementById('ruta');
+        const subRutaSelect = document.getElementById('subRuta');
+        const cantidadSelect = document.getElementById('cantidad');
+        const btnImprimir = document.getElementById('btnImprimir');
 
-            // Limpiar opciones existentes
-            subRutaSelect.innerHTML = '<option value="">Seleccione una subruta</option>';
+        const totalTiquetesSpan = document.getElementById('totalTiquetes');
+        const totalDineroSpan = document.getElementById('totalDinero');
 
-            if (rutaSeleccionada) {
-                fetch(`/Boleteria/GetSubRutas?ruta=${rutaSeleccionada}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(item => {
-                            const option = document.createElement('option');
-                            option.value = item.SubRuta;
-                            option.textContent = `${item.SubRuta} - ${item.Precio} colones`;
-                            subRutaSelect.appendChild(option);
-                        });
-                    })
-                    .catch(error => console.error('Error al cargar las subrutas:', error));
+        let totalTiquetes = 0;
+        let totalDinero = 0;
+
+        // Datos de subrutas y precios
+        const siquirresSubRutas = [
+            { nombre: "Cairo", precio: 335 },
+            { nombre: "La Alegría", precio: 495 },
+            { nombre: "Las Lomas", precio: 885 },
+            { nombre: "San Isidro", precio: 385 },
+        ];
+
+        // Manejar selección de ruta
+        rutaSelect.addEventListener('change', () => {
+            const rutaSeleccionada = rutaSelect.value;
+            subRutaSelect.disabled = rutaSeleccionada === "";
+            cantidadSelect.disabled = true;
+            btnImprimir.disabled = true;
+
+            if (rutaSeleccionada === "Siquirres-La Alegría") {
+                subRutaSelect.innerHTML = '<option value="">Seleccione una subruta</option>';
+                siquirresSubRutas.forEach(subRuta => {
+                    const option = document.createElement('option');
+                    option.value = subRuta.precio;
+                    option.textContent = subRuta.nombre;
+                    subRutaSelect.appendChild(option);
+                });
+            } else {
+                subRutaSelect.innerHTML = '<option value="">Seleccione una subruta</option>';
             }
         });
+
+        // Manejar subruta
+        subRutaSelect.addEventListener('change', () => {
+            cantidadSelect.disabled = subRutaSelect.value === "";
+
+            if (!cantidadSelect.disabled) {
+                cantidadSelect.innerHTML = '<option value="">Seleccione la cantidad</option>';
+                for (let i = 1; i <= 10; i++) {
+                    const option = document.createElement('option');
+                    option.value = i;
+                    option.textContent = i;
+                    cantidadSelect.appendChild(option);
+                }
+            }
+        });
+
+        // Manejar botón de imprimir
+        cantidadSelect.addEventListener('change', () => {
+            btnImprimir.disabled = cantidadSelect.value === "";
+        });
+
+        // Generar e imprimir tiquete
+        btnImprimir.addEventListener('click', () => {
+            const ruta = rutaSelect.options[rutaSelect.selectedIndex].text;
+            const subRuta = subRutaSelect.options[subRutaSelect.selectedIndex].text;
+            const precio = parseInt(subRutaSelect.value);
+            const cantidad = parseInt(cantidadSelect.value);
+            const total = precio * cantidad;
+
+            // Actualizar totales
+            totalTiquetes += cantidad;
+            totalDinero += total;
+
+            totalTiquetesSpan.textContent = totalTiquetes;
+            totalDineroSpan.textContent = totalDinero;
+
+            // Crear contenido del tiquete para imprimir
+            const tiqueteHTML = `
+                <div style="text-align: center; font-family: Arial, sans-serif; margin: 20px;">
+                    <h2>Tiquete de Viaje</h2>
+                    <p><strong>Ruta:</strong> ${ruta}</p>
+                    <p><strong>SubRuta:</strong> ${subRuta}</p>
+                    <p><strong>Cantidad:</strong> ${cantidad}</p>
+                    <p><strong>Total:</strong> ${total} colones</p>
+                </div>
+            `;
+
+            // Crear nueva ventana para impresión
+            const printWindow = window.open('', '', 'width=600,height=400');
+            printWindow.document.write(tiqueteHTML);
+            printWindow.document.close();
+            printWindow.print();
+        });
     </script>
-
-    <!-- SweetAlert para mensajes -->
-    <script>
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <text>
-                Swal.fire({
-                    icon: 'success',
-                    title: '¡Éxito!',
-                    text: '@TempData["SuccessMessage"]',
-                    confirmButtonText: 'Aceptar'
-                });
-            </text>
-        }
-
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <text>
-                Swal.fire({
-                    icon: 'error',
-                    title: '¡Error!',
-                    text: '@TempData["ErrorMessage"]',
-                    confirmButtonText: 'Aceptar'
-                });
-            </text>
-        }
-    </script>
-
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,23 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Imprimir Tiquete";
+    ViewData["Title"] = "Vista Previa de Tiquete";
 }
 
-<div class="container my-5">
-    <h1 class="text-center">Tiquete Generado</h1>
-    <hr>
-    <div class="card shadow-lg">
-        <div class="card-body">
-            <h5 class="card-title">Detalles del Tiquete</h5>
-            <p><strong>Vendedor:</strong> @ViewBag.Vendedor</p>
-            <p><strong>Ruta:</strong> @ViewBag.Ruta</p>
-            <p><strong>Horario:</strong> @ViewBag.Horario</p>
-            <p><strong>Sub-Ruta:</strong> @ViewBag.SubRuta</p>
-            <p><strong>Cantidad de Tiquetes:</strong> @ViewBag.Cantidad</p>
-            <p><strong>Precio Total:</strong> @ViewBag.PrecioTotal colones</p>
-        </div>
-    </div>
-    <div class="text-center mt-4">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container my-4">
+        <h1>Puma Pardo</h1>
+        <p><strong>Ruta:</strong> @ViewBag.Ruta</p>
+        <p><strong>Horario:</strong> @ViewBag.Horario</p>
+        <p><strong>Cantidad:</strong> @ViewBag.Cantidad</p>
+        <p><strong>Total a Pagar:</strong> @ViewBag.PrecioTotal colones</p>
+
         <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
-        <a href="/" class="btn btn-secondary">Volver al inicio</a>
     </div>
-</div>
+</body>
+</html>

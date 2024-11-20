@@ -22,14 +22,7 @@ namespace Boleteria.Controllers
         {
             // Redirige al controlador de boletería
             return RedirectToAction("Index", "Boleteria");
-            var vendedor = HttpContext.Session.GetString("Vendedor");
-            if (string.IsNullOrEmpty(vendedor))
-            {
-                return RedirectToAction("SeleccionarVendedor");
-            }
-
-            ViewBag.Vendedor = vendedor;
-            return View();
+           
         }
 
         public IActionResult Privacy()
@@ -42,19 +35,7 @@ namespace Boleteria.Controllers
             return View();
         }
 
-        // Acción para guardar el nombre del vendedor en sesión
-        [HttpPost]
-        public IActionResult SetVendedor(string vendedor)
-        {
-            if (vendedor == "Kiara" || vendedor == "Allan")
-            {
-                HttpContext.Session.SetString("Vendedor", vendedor);
-                return RedirectToAction("Boleteria");
-            }
-
-            TempData["Error"] = "Debe seleccionar un vendedor válido.";
-            return RedirectToAction("SeleccionarVendedor");
-        }
+    
 
     }
 }

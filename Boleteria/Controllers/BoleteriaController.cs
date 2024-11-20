@@ -21,67 +21,32 @@ namespace Boleteria.Controllers
 
             return View();
         }
-        // Acción para manejar la impresión de tiquetes
-        public IActionResult ImprimirTiquete(string ruta, string horario, string subRuta, int cantidad)
+
+        [HttpGet]
+        public JsonResult GetSubRutas(string ruta)
         {
-            var vendedor = HttpContext.Session.GetString("Vendedor");
-            if (string.IsNullOrEmpty(vendedor))
+            // Mapeo de rutas con sus subrutas y precios
+            var subRutas = new Dictionary<string, List<(string SubRuta, int Precio)>>()
             {
-                return RedirectToAction("SeleccionarVendedor");
-            }
-
-            // Lógica para calcular el precio y pasar los datos a la vista
-            decimal precio = 500; // Ejemplo de precio base
-            ViewBag.Vendedor = vendedor;
-            ViewBag.Ruta = ruta;
-            ViewBag.Horario = horario;
-            ViewBag.SubRuta = subRuta;
-            ViewBag.Cantidad = cantidad;
-            ViewBag.PrecioTotal = precio * cantidad;
-
-            return View();
-        }
-
-
-
-
-
-        [HttpPost]
-        public IActionResult Comprar(string ruta, decimal precio)
-        {
-            // Validar parámetros de entrada
-            if (string.IsNullOrEmpty(ruta) || precio <= 0)
-            {
-                TempData["ErrorMessage"] = "Datos inválidos. Por favor revise la ruta y el precio.";
-                return RedirectToAction("Index");
-            }
-
-            // Leer las cookies existentes
-            int totalTiquetes = Request.Cookies["TotalTiquetes"] != null
-                                ? int.Parse(Request.Cookies["TotalTiquetes"])
-                                : 0;
-
-            decimal totalDinero = Request.Cookies["TotalDinero"] != null
-                                  ? decimal.Parse(Request.Cookies["TotalDinero"])
-                                  : 0;
-
-            // Actualizar los valores
-            totalTiquetes++;
-            totalDinero += precio;
-
-            // Escribir las cookies actualizadas con una duración de 1 día
-            var cookieOptions = new Microsoft.AspNetCore.Http.CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(1)
+                { "Siquirres-La Alegría", new List<(string, int)>
+                    {
+                        ("Cairo", 335), ("Herediana", 365), ("Y Griega", 385),
+                        ("San Isidro", 385), ("Villa Bonita", 410), ("El Cruce", 410)
+                    }
+                },
+                { "Otra Ruta", new List<(string, int)>
+                    {
+                        ("SubRuta1", 200), ("SubRuta2", 250)
+                    }
+                }
             };
 
-            Response.Cookies.Append("TotalTiquetes", totalTiquetes.ToString(), cookieOptions);
-            Response.Cookies.Append("TotalDinero", totalDinero.ToString(), cookieOptions);
+            if (subRutas.ContainsKey(ruta))
+            {
+                return Json(subRutas[ruta]);
+            }
 
-            // Guardar un mensaje de éxito en TempData
-            TempData["SuccessMessage"] = $"¡Compra exitosa! Has comprado un tiquete para la ruta {ruta} por {precio:C}.";
-
-            return RedirectToAction("Index");
+            return Json(new List<(string, int)>());
         }
     }
 }

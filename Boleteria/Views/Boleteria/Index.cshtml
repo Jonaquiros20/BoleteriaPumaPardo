@@ -11,189 +11,146 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- FontAwesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-    <div class="container-fluid my-4">
-        <!-- Barra Horizontal Superior -->
-        <div class="bg-dark text-white d-flex justify-content-between align-items-center px-4 py-2">
-            <a href="/" class="text-white text-decoration-none">
-                <i class="fas fa-home"></i> Inicio
-            </a>
-            <h1 class="h5 m-0">Boletería</h1>
-            <img src="/images/logo.png" alt="Logo" style="height: 40px;">
+    <div class="container my-4">
+        <h1 class="text-center">Boletería</h1>
+
+        <!-- Resumen de totales -->
+        <div class="my-4 text-center">
+            <p><strong>Total Tiquetes Vendidos:</strong> @ViewBag.TotalTiquetes</p>
+            <p><strong>Total Dinero Recaudado:</strong> @ViewBag.TotalDinero colones</p>
         </div>
 
-        <div class="container">
-            <h3 class="text-center">Bienvenido, @ViewBag.Vendedor</h3>
-            <p class="text-center">Vendedor activo hasta que cierre el sistema.</p>
-        </div>
+        <!-- Formulario para ingresar datos de la compra -->
+        <form asp-action="ImprimirTiquete" method="get" class="p-4 bg-light border rounded">
+            <h3 class="text-center mb-4">Generar Tiquete</h3>
 
-        <!-- Lista de Rutas Horizontales -->
-        <ul class="nav nav-tabs justify-content-center my-3">
-            <li class="nav-item">
-                <button class="nav-link active" onclick="cargarHorarios('Alegria')">Siquirres-La Alegría</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link" onclick="cargarHorarios('Cairo')">Siquirres-Cairo</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link" onclick="cargarHorarios('PortonIberia')">Siquirres-Portón Iberia</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link" onclick="cargarHorarios('6Amigos')">Siquirres-6 Amigos</button>
-            </li>
-        </ul>
-
-        <!-- Botón para habilitar todos los horarios -->
-        <div class="text-center my-3">
-            <button class="btn btn-primary" onclick="habilitarTodos()">Habilitar Todos los Tiquetes</button>
-        </div>
-
-        <!-- Contenedor dinámico de horarios -->
-        <div id="horarios-container" class="d-flex flex-wrap justify-content-center">
-            <!-- Horarios cargados dinámicamente aquí -->
-        </div>
-    </div>
-
-    <!-- Modal para seleccionar ruta -->
-    <div class="modal fade" id="rutasModal" tabindex="-1" aria-labelledby="rutasModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="rutasModalLabel">Seleccione una Ruta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="rutas-list" class="list-group">
-                        <!-- Rutas dinámicas cargadas aquí -->
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="number" id="cantidadInput" class="form-control" placeholder="Cantidad de Tiquetes" min="1">
-                    <button id="confirmarCantidadBtn" class="btn btn-primary">Confirmar</button>
-                </div>
+            <!-- Selección de ruta -->
+            <div class="mb-3">
+                <label for="ruta" class="form-label">Ruta</label>
+                <select id="ruta" name="ruta" class="form-select" required>
+                    <option value="">Seleccione una ruta</option>
+                    <option value="Siquirres-La Alegría">Siquirres-La Alegría</option>
+                    <option value="Otra Ruta">Otra Ruta</option>
+                </select>
             </div>
-        </div>
+
+            <!-- Subrutas dinámicas -->
+            <div class="mb-3">
+                <label for="subRuta" class="form-label">SubRuta</label>
+                <select id="subRuta" name="subRuta" class="form-select" required>
+                    <option value="">Seleccione una subruta</option>
+                    <option value="Cairo M">Cairo</option>
+                    <option value="Herediana">Herediana</option>
+                    <option value="7:10 AM">7:10 AM</option>
+                    <option value="8:10 AM">8:10 AM</option>
+                    <option value="9:10 AM">9:10 AM</option>
+                    <option value="10:10 AM">10:10 AM</option>
+                    <option value="11:10 AM">11:10 AM</option>
+                    <option value="12:10 PM">12:10 PM</option>
+                    <option value="1:10 PM">1:10 PM</option>
+                    <option value="2:10 PM">2:10 PM</option>
+                    <option value="3:10 PM">3:10 PM</option>
+                    <option value="4:10 PM">4:10 PM</option>
+                    <option value="5:10 PM">5:10 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="6:45 PM">6:45 PM</option>
+                    <option value="7:30 PM">7:30 PM</option>
+                </select>
+            </div>
+
+            <!-- Horario -->
+            <div class="mb-3">
+                <label for="horario" class="form-label">Horario</label>
+                <select id="horario" name="horario" class="form-select" required>
+                    <option value="5:30 AM">5:30 AM</option>
+                    <option value="6:10 AM">6:10 AM</option>
+                    <option value="7:10 AM">7:10 AM</option>
+                    <option value="8:10 AM">8:10 AM</option>
+                    <option value="9:10 AM">9:10 AM</option>
+                    <option value="10:10 AM">10:10 AM</option>
+                    <option value="11:10 AM">11:10 AM</option>
+                    <option value="12:10 PM">12:10 PM</option>
+                    <option value="1:10 PM">1:10 PM</option>
+                    <option value="2:10 PM">2:10 PM</option>
+                    <option value="3:10 PM">3:10 PM</option>
+                    <option value="4:10 PM">4:10 PM</option>
+                    <option value="5:10 PM">5:10 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="6:45 PM">6:45 PM</option>
+                    <option value="7:30 PM">7:30 PM</option>
+                </select>
+            </div>
+
+            <!-- Cantidad de tiquetes -->
+            <div class="mb-3">
+                <label for="cantidad" class="form-label">Cantidad de Tiquetes</label>
+                <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Ingrese la cantidad" min="1" required>
+            </div>
+
+            <!-- Botón de imprimir -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Vista previa e Imprimir</button>
+            </div>
+        </form>
     </div>
+
+    <!-- Script para manejar subrutas dinámicas -->
+    <script>
+        document.getElementById('ruta').addEventListener('change', function () {
+            const rutaSeleccionada = this.value;
+            const subRutaSelect = document.getElementById('subRuta');
+
+            // Limpiar opciones existentes
+            subRutaSelect.innerHTML = '<option value="">Seleccione una subruta</option>';
+
+            if (rutaSeleccionada) {
+                fetch(`/Boleteria/GetSubRutas?ruta=${rutaSeleccionada}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.SubRuta;
+                            option.textContent = `${item.SubRuta} - ${item.Precio} colones`;
+                            subRutaSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error al cargar las subrutas:', error));
+            }
+        });
+    </script>
+
+    <!-- SweetAlert para mensajes -->
+    <script>
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: '@TempData["SuccessMessage"]',
+                    confirmButtonText: 'Aceptar'
+                });
+            </text>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Error!',
+                    text: '@TempData["ErrorMessage"]',
+                    confirmButtonText: 'Aceptar'
+                });
+            </text>
+        }
+    </script>
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Funcionalidad JavaScript -->
-    <script>
-        const horarios = {
-            Alegria: {
-                LunesSabado: [
-                    { hora: "5:25 AM", activo: true },
-                    { hora: "6:10 AM", activo: true },
-                    { hora: "9:10 AM", activo: true }
-                ],
-                Domingo: [
-                    { hora: "7:10 AM", activo: true },
-                    { hora: "9:10 AM", activo: true }
-                ]
-            },
-            Cairo: [],
-            PortonIberia: [],
-            Amigos: []
-        };
-
-        const rutas = [
-            { nombre: "Siq-CairoPista", precio: 500 },
-            { nombre: "Siq-La Francia", precio: 500 },
-            { nombre: "Siq-Herediana", precio: 500 },
-            { nombre: "Siq-Y.Griega", precio: 500 },
-            { nombre: "Siq-San Isidro", precio: 500 },
-            { nombre: "Siq-VillaBonita", precio: 500 },
-            { nombre: "Siq-Cruce", precio: 500 },
-            { nombre: "Siq-Alegria", precio: 500 },
-            { nombre: "Siq-Lomas", precio: 500 },
-        ];
-
-        let horarioSeleccionado = null;
-        let rutaSeleccionada = null;
-
-        function cargarHorarios(ruta) {
-            const container = document.getElementById("horarios-container");
-            container.innerHTML = "";
-
-            const hoy = new Date();
-            const dia = hoy.getDay(); // 0 = Domingo, 1 = Lunes...
-
-            let horariosRuta =
-                dia === 0
-                    ? horarios[ruta]?.Domingo || []
-                    : horarios[ruta]?.LunesSabado || [];
-
-            horariosRuta.forEach((horario) => {
-                const horarioElement = document.createElement("button");
-                horarioElement.classList.add("btn", "btn-outline-primary", "m-2");
-                horarioElement.disabled = !horario.activo;
-                horarioElement.textContent = horario.hora;
-
-                horarioElement.onclick = function () {
-                    horarioSeleccionado = horario.hora;
-                    mostrarRutasModal();
-                };
-
-                container.appendChild(horarioElement);
-            });
-        }
-
-        function mostrarRutasModal() {
-            const rutasList = document.getElementById("rutas-list");
-            rutasList.innerHTML = "";
-
-            rutas.forEach((ruta) => {
-                const rutaElement = document.createElement("div");
-                rutaElement.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
-                rutaElement.innerHTML = `
-                            <span>${ruta.nombre}</span>
-                            <span class="badge bg-primary">${ruta.precio} colones</span>
-                        `;
-                rutaElement.onclick = function () {
-                    rutaSeleccionada = ruta.nombre;
-                    Array.from(rutasList.children).forEach((child) =>
-                        child.classList.remove("bg-light", "border")
-                    );
-                    rutaElement.classList.add("bg-light", "border");
-                };
-                rutasList.appendChild(rutaElement);
-            });
-
-            const rutasModal = new bootstrap.Modal(document.getElementById("rutasModal"));
-            rutasModal.show();
-        }
-
-        document.getElementById("confirmarCantidadBtn").onclick = function () {
-            const cantidad = document.getElementById("cantidadInput").value;
-            if (cantidad && cantidad > 0 && rutaSeleccionada) {
-                const vendedor = "@ViewBag.Vendedor";
-                const url = `/ImprimirTiquete?ruta=${rutaSeleccionada}&horario=${horarioSeleccionado}&subRuta=${rutaSeleccionada}&cantidad=${cantidad}`;
-                window.location.href = url;
-            } else {
-                alert("Por favor seleccione una ruta y una cantidad válida.");
-            }
-        };
-
-
-        function habilitarTodos() {
-            Object.keys(horarios).forEach((ruta) => {
-                ["LunesSabado", "Domingo"].forEach((tipoDia) => {
-                    if (horarios[ruta]?.[tipoDia]) {
-                        horarios[ruta][tipoDia].forEach((h) => (h.activo = true));
-                    }
-                });
-            });
-            alert("Todos los horarios han sido habilitados");
-            cargarHorarios("Alegria"); // Recargar para ver cambios
-        }
-
-        // Cargar horarios por defecto
-        cargarHorarios("Alegria");
-    </script>
 </body>
 </html>

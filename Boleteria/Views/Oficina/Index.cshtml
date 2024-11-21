@@ -3,6 +3,68 @@
 }
 
 <div class="container">
-    <h1 class="mt-4">Bienvenido a la Oficina</h1>
-    <p>Contenido específico para la sección de Oficina.</p>
+    <h1 class="mt-4 text-center text-primary">Panel de Gestión de Oficina</h1>
+    <p class="lead text-center">Selecciona una de las opciones para administrar el sistema.</p>
+
+    <div class="row mt-5">
+        <!-- Gestionar Choferes -->
+        <div class="col-md-3 text-center">
+            <div class="card shadow">
+                <div class="card-body">
+                    <i class="fa fa-users fa-3x text-info mb-3"></i>
+                    <h5 class="card-title">Gestionar Choferes</h5>
+                    <p class="card-text">Agrega, edita o elimina choferes registrados.</p>
+                    <a href="#" class="btn btn-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestionar Facturas -->
+        <div class="col-md-3 text-center">
+            <div class="card shadow">
+                <div class="card-body">
+                    <i class="fa fa-file-invoice fa-3x text-warning mb-3"></i>
+                    <h5 class="card-title">Gestionar Facturas</h5>
+                    <p class="card-text">Consulta o registra facturas del sistema.</p>
+                    <a href="#" class="btn btn-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ver Cierres de Caja -->
+        <div class="col-md-3 text-center">
+            <div class="card shadow">
+                <div class="card-body">
+                    <i class="fa fa-cash-register fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Cierres de Caja</h5>
+                    <p class="card-text">Consulta los cierres diarios de boletería.</p>
+                    <a href="#" class="btn btn-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gestionar Unidades de Bus -->
+        <div class="col-md-3 text-center">
+            <div class="card shadow">
+                <div class="card-body">
+                    <i class="fa fa-bus fa-3x text-danger mb-3"></i>
+                    <h5 class="card-title">Gestionar Unidades</h5>
+                    <p class="card-text">Consulta o edita las unidades de transporte.</p>
+                    <a href="#" class="btn btn-primary">Ir</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .card {
+        border-radius: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+</style>

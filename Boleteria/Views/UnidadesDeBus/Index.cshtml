@@ -6,38 +6,95 @@
     <h1 class="mt-4 text-warning text-center">Unidades de Bus</h1>
     <p class="lead text-center">Consulta el estado y detalles de nuestras unidades.</p>
 
-    <table class="table table-striped table-bordered mt-4">
-        <thead class="table-dark">
+    <table class="table table-hover table-bordered mt-4">
+        <thead class="table-dark text-center">
             <tr>
                 <th>#</th>
+                <th>Imagen</th>
                 <th>Placa</th>
                 <th>Modelo</th>
                 <th>Capacidad</th>
-                <th>Estado</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <!-- Fila 1 -->
+            <tr class="text-center unit-row" data-img="https://via.placeholder.com/600" data-info="Mercedes-Benz 2020 - ABC-123">
                 <td>1</td>
+                <td>
+                    <img src="https://via.placeholder.com/100" alt="Bus ABC-123" class="bus-image">
+                </td>
                 <td>ABC-123</td>
                 <td>Mercedes-Benz 2020</td>
                 <td>50 pasajeros</td>
-                <td><span class="badge bg-success">Activo</span></td>
             </tr>
-            <tr>
+            <!-- Fila 2 -->
+            <tr class="text-center unit-row" data-img="https://via.placeholder.com/600" data-info="Volvo 2018 - DEF-456">
                 <td>2</td>
+                <td>
+                    <img src="https://via.placeholder.com/100" alt="Bus DEF-456" class="bus-image">
+                </td>
                 <td>DEF-456</td>
                 <td>Volvo 2018</td>
                 <td>45 pasajeros</td>
-                <td><span class="badge bg-warning">En Mantenimiento</span></td>
             </tr>
-            <tr>
+            <!-- Fila 3 -->
+            <tr class="text-center unit-row" data-img="https://via.placeholder.com/600" data-info="Scania 2019 - GHI-789">
                 <td>3</td>
+                <td>
+                    <img src="https://via.placeholder.com/100" alt="Bus GHI-789" class="bus-image">
+                </td>
                 <td>GHI-789</td>
                 <td>Scania 2019</td>
                 <td>60 pasajeros</td>
-                <td><span class="badge bg-danger">Fuera de Servicio</span></td>
             </tr>
         </tbody>
     </table>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="unitModal" tabindex="-1" aria-labelledby="unitModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="unitModalLabel">Detalles de la Unidad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" alt="Unidad de Bus" class="img-fluid mb-3 rounded">
+                <p id="modalInfo" class="text-muted"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Imagen de autobuses */
+    .bus-image {
+        width: 100px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+
+    .unit-row:hover {
+        background-color: #f8f9fa;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    // Seleccionar filas y mostrar el modal
+    document.querySelectorAll('.unit-row').forEach((row) => {
+        row.addEventListener('click', function () {
+            const imgSrc = this.getAttribute('data-img');
+            const info = this.getAttribute('data-info');
+
+            document.getElementById('modalImage').src = imgSrc;
+            document.getElementById('modalInfo').textContent = info;
+
+            const modal = new bootstrap.Modal(document.getElementById('unitModal'));
+            modal.show();
+        });
+    });
+</script>

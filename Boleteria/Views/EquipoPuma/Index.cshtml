@@ -1,27 +1,113 @@
 ﻿@{
-    ViewData["Title"] = "Equipo Puma";
+    ViewData["Title"] = "Equipo de Choferes";
 }
 
-<div class="container fade-in">
-    <h1 class="mt-4 text-info text-center">Conoce a nuestro equipo</h1>
-    <p class="lead text-center">Nuestro equipo está dedicado a ofrecerte el mejor servicio.</p>
+<div class="container fade-in my-5">
+    <h1 class="mt-4 text-info text-center">Conoce a Nuestros Choferes</h1>
+    <p class="lead text-center">Cada chofer en nuestro equipo aporta experiencia y dedicación.</p>
 
-    <div class="row mt-4">
-        <div class="col-md-4 text-center team-member">
-            <img src="https://via.placeholder.com/150" alt="Miembro del equipo" class="rounded-circle mb-3">
-            <h5>Juan Pérez</h5>
-            <p>Gerente General</p>
+    <div class="row mt-5 gy-5 justify-content-center">
+        <!-- Tarjeta de Chofer -->
+        <div class="col-md-4 col-sm-6 text-center driver-card">
+            <div class="card shadow-lg position-relative">
+                <div class="card-body">
+                    <img src="https://via.placeholder.com/150" alt="Chofer" class="rounded-circle driver-image mb-3">
+                    <h5 class="driver-name text-primary">Juan Pérez</h5>
+                    <p class="driver-role text-muted">Conductor Senior</p>
+                    <button class="btn btn-outline-primary btn-sm view-details-btn">Ver Detalles</button>
+                </div>
+                <!-- Vista previa -->
+                <div class="driver-preview position-absolute p-4">
+                    <img src="https://via.placeholder.com/300" alt="Foto del Chofer" class="rounded-circle mb-3 preview-image">
+                    <h5 class="driver-name text-primary">Juan Pérez</h5>
+                    <p class="driver-role text-muted">Conductor Senior</p>
+                    <p class="driver-info">Inició: 12 de Marzo, 2015</p>
+                    <p class="driver-bio">
+                        Con más de 10 años de experiencia, Juan garantiza seguridad y comodidad en cada viaje.
+                    </p>
+                    <button class="btn btn-secondary btn-sm close-preview-btn">Cerrar</button>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4 text-center team-member">
-            <img src="https://via.placeholder.com/150" alt="Miembro del equipo" class="rounded-circle mb-3">
-            <h5>María López</h5>
-            <p>Coordinadora de Operaciones</p>
-        </div>
-        <div class="col-md-4 text-center team-member">
-            <img src="https://via.placeholder.com/150" alt="Miembro del equipo" class="rounded-circle mb-3">
-            <h5>Carlos Ramírez</h5>
-            <p>Encargado de Logística</p>
-        </div>
+
+        <!-- Añade más tarjetas de choferes aquí -->
     </div>
 </div>
 
+<style>
+    .driver-card {
+        position: relative;
+    }
+
+    .card {
+        border: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+    .driver-image {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border: 4px solid #e9ecef;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover .driver-image {
+        transform: scale(1.1);
+    }
+
+    .driver-preview {
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%, 10%);
+        opacity: 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        position: absolute;
+        display: none;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+        .driver-preview.show {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -10%);
+        }
+
+    .close-preview-btn {
+        margin-top: 15px;
+    }
+</style>
+
+<script>
+    // Mostrar detalles del chofer
+    document.querySelectorAll('.view-details-btn').forEach((btn) => {
+        btn.addEventListener('click', function () {
+            const preview = this.closest('.card').querySelector('.driver-preview');
+            preview.style.display = 'block';
+            setTimeout(() => {
+                preview.style.opacity = '1';
+                preview.style.transform = 'translate(-50%, -10%)';
+            }, 10);
+        });
+    });
+
+    // Ocultar detalles del chofer
+    document.querySelectorAll('.close-preview-btn').forEach((btn) => {
+        btn.addEventListener('click', function () {
+            const preview = this.closest('.driver-preview');
+            preview.style.opacity = '0';
+            preview.style.transform = 'translate(-50%, 10%)';
+            setTimeout(() => {
+                preview.style.display = 'none';
+            }, 300);
+        });
+    });
+</script>

@@ -11,7 +11,72 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\net8.0\Boleteria.AssemblyInfo.cs" />
+    <Compile Include="obj\Debug\net8.0\Boleteria.GlobalUsings.g.cs" />
+    <Compile Include="obj\Debug\net8.0\Boleteria.RazorAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="bin\Debug\net8.0\appsettings.Development.json" />
+    <Content Include="bin\Debug\net8.0\appsettings.json" />
+    <Content Include="bin\Debug\net8.0\Boleteria.deps.json" />
+    <Content Include="bin\Debug\net8.0\Boleteria.runtimeconfig.json" />
+    <Content Include="bin\Debug\net8.0\Boleteria.staticwebassets.endpoints.json" />
+    <Content Include="bin\Debug\net8.0\Boleteria.staticwebassets.runtime.json" />
+    <Content Include="obj\Boleteria.csproj.nuget.dgspec.json" />
+    <Content Include="obj\Debug\net8.0\ApiEndpoints.json" />
+    <Content Include="obj\Debug\net8.0\Boleteria.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\net8.0\Boleteria.sourcelink.json" />
+    <Content Include="obj\Debug\net8.0\scopedcss\bundle\Boleteria.styles.css" />
+    <Content Include="obj\Debug\net8.0\scopedcss\projectbundle\Boleteria.bundle.scp.css" />
+    <Content Include="obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css" />
+    <Content Include="obj\Debug\net8.0\staticwebassets.build.endpoints.json" />
+    <Content Include="obj\Debug\net8.0\staticwebassets.build.json" />
+    <Content Include="obj\Debug\net8.0\staticwebassets.development.json" />
+    <Content Include="obj\Debug\net8.0\staticwebassets.pack.json" />
+    <Content Include="obj\Debug\net8.0\staticwebassets.references.upToDateCheck.txt" />
+    <Content Include="obj\Debug\net8.0\staticwebassets.removed.txt" />
+    <Content Include="obj\Debug\net8.0\staticwebassets.upToDateCheck.txt" />
+    <Content Include="obj\project.assets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net8.0\Boleteria.dll" />
+    <None Include="bin\Debug\net8.0\Boleteria.exe" />
+    <None Include="bin\Debug\net8.0\Boleteria.pdb" />
+    <None Include="obj\Boleteria.csproj.nuget.g.props" />
+    <None Include="obj\Boleteria.csproj.nuget.g.targets" />
+    <None Include="obj\Debug\net8.0\apphost.exe" />
+    <None Include="obj\Debug\net8.0\Boleteria.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\net8.0\Boleteria.assets.cache" />
+    <None Include="obj\Debug\net8.0\Boleteria.csproj.BuildWithSkipAnalyzers" />
+    <None Include="obj\Debug\net8.0\Boleteria.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\net8.0\Boleteria.dll" />
+    <None Include="obj\Debug\net8.0\Boleteria.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Debug\net8.0\Boleteria.genruntimeconfig.cache" />
+    <None Include="obj\Debug\net8.0\Boleteria.MvcApplicationPartsAssemblyInfo.cache" />
+    <None Include="obj\Debug\net8.0\Boleteria.pdb" />
+    <None Include="obj\Debug\net8.0\Boleteria.RazorAssemblyInfo.cache" />
+    <None Include="obj\Debug\net8.0\refint\Boleteria.dll" />
+    <None Include="obj\Debug\net8.0\ref\Boleteria.dll" />
+    <None Include="obj\Debug\net8.0\staticwebassets\msbuild.Boleteria.Microsoft.AspNetCore.StaticWebAssetEndpoints.props" />
+    <None Include="obj\Debug\net8.0\staticwebassets\msbuild.Boleteria.Microsoft.AspNetCore.StaticWebAssets.props" />
+    <None Include="obj\Debug\net8.0\staticwebassets\msbuild.build.Boleteria.props" />
+    <None Include="obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Boleteria.props" />
+    <None Include="obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Boleteria.props" />
+    <None Include="obj\project.nuget.cache" />
     <None Include="wwwroot\Resources\puma.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>

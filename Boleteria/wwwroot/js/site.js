@@ -1,4 +1,17 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// Usar GSAP para animaciones
+document.addEventListener("DOMContentLoaded", function () {
+    gsap.from("h1", {
+        duration: 1.2,
+        y: -50,
+        opacity: 0,
+        ease: "power3.out"
+    });
 
-// Write your JavaScript code.
+    gsap.from(".btn", {
+        duration: 0.8,
+        scale: 0,
+        opacity: 0,
+        stagger: 0.2,
+        ease: "elastic.out(1, 0.5)"
+    });
+});

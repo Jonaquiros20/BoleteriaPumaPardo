@@ -29,11 +29,7 @@ namespace Boleteria.Controllers
         {
             return View();
         }
-        // Acción para mostrar la vista de selección de vendedor
-        public IActionResult SeleccionarVendedor()
-        {
-            return View();
-        }
+      
 
     
 

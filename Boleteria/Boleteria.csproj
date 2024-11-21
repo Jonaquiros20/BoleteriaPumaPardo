@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\Resources\puma.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Resources\puma.png" />
+  </ItemGroup>
+
 </Project>

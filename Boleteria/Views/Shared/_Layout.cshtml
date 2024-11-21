@@ -3,27 +3,30 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Boleteria</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQKJ3CBjHMs5L35LMZv7HBofQeMklgkXkvdMHj08ECNcEhMZe3pBIK9h7" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-Ej2jW8CFee2JjfepEMDYT9htUtLg8MEk8nmLBJ4KNh6HlGZ6x2zWOn7+FAmKJtAo" crossorigin="anonymous">
-    <link rel="icon" type="image/png" href="/favicon.ico">
+    <title>@ViewData["Title"] - Puma Pardo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
     <header>
-        <!-- Aquí puedes agregar tu barra de navegación -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/">Boletería</a>
+                <a class="navbar-brand" href="/">Puma Pardo</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/Home/Oficina">Oficina</a>
+                            <a class="nav-link" href="/Home/Oficina"><i class="fas fa-building"></i> Oficina</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Home/Boleteria">Boletería</a>
+                            <a class="nav-link" href="/Home/Boleteria"><i class="fas fa-ticket-alt"></i> Boletería</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Facturas"><i class="fas fa-file-invoice"></i> Facturas</a>
                         </li>
                     </ul>
                 </div>
@@ -35,11 +38,10 @@
         @RenderBody()
     </main>
 
-    <footer class="footer bg-dark text-center text-white py-3">
-        <p>&copy; 2024 - Boletería. Todos los derechos reservados.</p>
-    </footer>
+    
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha384-Z9Ey4HLq2xMPge+x8lwzRaiSdToBhhFY4egD2cgHQk3sLV0/lAu9nfZPe4gQfw7W" crossorigin="anonymous"></script>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
 </body>
 </html>

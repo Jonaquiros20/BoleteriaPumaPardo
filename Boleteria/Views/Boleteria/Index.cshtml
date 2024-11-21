@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Boletería";
+    ViewBag.Title = "Boletería";
 }
 
 <!DOCTYPE html>
@@ -7,183 +7,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-
-    <!-- Bootstrap CSS -->
+    <title>Boletería</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    @* <style>
-        /* Ocultar los totales durante la impresión */
-        @media print {
-            #totales {
-                display: none;
-            }
+    <style>
+        body {
+            background-color: #f0f2f5;
         }
-    </style> *@
+
+        .main-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .subruta-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="container my-4">
-        <h1 class="text-center">Boletería</h1>
+        <div class="main-card mx-auto p-4 col-lg-8 col-md-10 col-sm-12">
+            <h1 class="text-center text-primary mb-4">Boletería</h1>
 
-        <!-- Sección de Totales -->
-        <div id="totales" class="mb-4 text-center">
-            <h4 class="text-success">Totales</h4>
-            <p><strong>Total de Tiquetes Vendidos:</strong> <span id="totalTiquetes">0</span></p>
-            <p><strong>Total Acumulado en Colones:</strong> <span id="totalDinero">0</span></p>
+            <div class="mb-4">
+                <h4>Ruta: <span id="rutaSeleccionada">Siquirres-La Alegría</span></h4>
+            </div>
+
+            <div id="listaSubRutas" class="row">
+                <!-- Subrutas generadas dinámicamente -->
+            </div>
+
+            <div class="mt-4">
+                <h4 class="text-success">Totales Generales</h4>
+                <p><strong>Total Tiquetes Vendidos:</strong> <span id="totalTiquetes">0</span></p>
+                <p><strong>Total Acumulado:</strong> <span id="totalDinero">0</span> colones</p>
+            </div>
         </div>
-
-        <!-- Formulario para ingresar datos de la compra -->
-        <form id="formularioTiquetes" class="p-4 bg-light border rounded">
-            <h3 class="text-center mb-4">Generar Tiquete</h3>
-
-            <!-- Selección de ruta -->
-            <div class="mb-3">
-                <label for="ruta" class="form-label">Ruta</label>
-                <select id="ruta" name="ruta" class="form-select" required>
-                    <option value="">Seleccione una ruta</option>
-                    <option value="Siquirres-La Alegría">Siquirres-La Alegría</option>
-                    <option value="Otra Ruta">Otra Ruta</option>
-                </select>
-            </div>
-
-            <!-- Lista dinámica de precios y subrutas -->
-            <div id="preciosSubRutas" class="mb-3" style="display: none;">
-                <h5 class="text-center">Precios por SubRuta</h5>
-                <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Cairo</span>
-                        <span class="price-label">335 colones</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>La Alegría</span>
-                        <span class="price-label">495 colones</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Las Lomas</span>
-                        <span class="price-label">885 colones</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>San Isidro</span>
-                        <span class="price-label">385 colones</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Selección de subruta -->
-            <div class="mb-3">
-                <label for="subRuta" class="form-label">SubRuta</label>
-                <select id="subRuta" name="subRuta" class="form-select" disabled required>
-                    <option value="">Seleccione una subruta</option>
-                </select>
-            </div>
-
-            <!-- Cantidad de tiquetes -->
-            <div class="mb-3">
-                <label for="cantidad" class="form-label">Cantidad de Tiquetes</label>
-                <select id="cantidad" name="cantidad" class="form-select" disabled required>
-                    <option value="">Seleccione la cantidad</option>
-                </select>
-            </div>
-
-            <!-- Botón para generar tiquete -->
-            <div class="text-center">
-                <button type="button" id="btnImprimir" class="btn btn-primary" disabled>Generar e Imprimir Tiquete</button>
-            </div>
-        </form>
     </div>
 
-    <!-- Script para manejar lógica de rutas, totales e impresión -->
     <script>
-        const rutaSelect = document.getElementById('ruta');
-        const subRutaSelect = document.getElementById('subRuta');
-        const cantidadSelect = document.getElementById('cantidad');
-        const btnImprimir = document.getElementById('btnImprimir');
+        const subRutas = {
+            "Siquirres-La Alegría": [
+                { nombre: "Cairo", precio: 335 },
+                { nombre: "La Alegría", precio: 495 },
+                { nombre: "Herediana", precio: 365 },
+                { nombre: "Las Lomas", precio: 885 },
+                { nombre: "Y Griega", precio: 385 },
+                { nombre: "San Isidro", precio: 385 },
+                { nombre: "Villa Bonita", precio: 410 },
+                { nombre: "El Cruce", precio: 410 },
+            ]
+        };
 
-        const totalTiquetesSpan = document.getElementById('totalTiquetes');
-        const totalDineroSpan = document.getElementById('totalDinero');
+        const rutaSeleccionada = document.getElementById("rutaSeleccionada");
+        const listaSubRutas = document.getElementById("listaSubRutas");
 
-        let totalTiquetes = 0;
-        let totalDinero = 0;
+        function inicializarSubRutas() {
+            listaSubRutas.innerHTML = "";
+            subRutas["Siquirres-La Alegría"].forEach((subRuta, index) => {
+                const div = document.createElement("div");
+                div.className = "col-md-4 subruta-card";
+                div.innerHTML = `
+                    <h5>${subRuta.nombre}</h5>
+                    <p>Precio: ${subRuta.precio} colones</p>
+                    <label for="cantidad-${index}" class="form-label">Cantidad:</label>
+                    <select id="cantidad-${index}" class="form-select">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                    <button class="btn btn-primary mt-2" onclick="redireccionarTiquete(${index})">Generar Tiquete</button>
+                `;
+                listaSubRutas.appendChild(div);
+            });
+        }
 
-        // Datos de subrutas y precios
-        const siquirresSubRutas = [
-            { nombre: "Cairo", precio: 335 },
-            { nombre: "La Alegría", precio: 495 },
-            { nombre: "Las Lomas", precio: 885 },
-            { nombre: "San Isidro", precio: 385 },
-        ];
-
-        // Manejar selección de ruta
-        rutaSelect.addEventListener('change', () => {
-            const rutaSeleccionada = rutaSelect.value;
-            subRutaSelect.disabled = rutaSeleccionada === "";
-            cantidadSelect.disabled = true;
-            btnImprimir.disabled = true;
-
-            if (rutaSeleccionada === "Siquirres-La Alegría") {
-                subRutaSelect.innerHTML = '<option value="">Seleccione una subruta</option>';
-                siquirresSubRutas.forEach(subRuta => {
-                    const option = document.createElement('option');
-                    option.value = subRuta.precio;
-                    option.textContent = subRuta.nombre;
-                    subRutaSelect.appendChild(option);
-                });
-            } else {
-                subRutaSelect.innerHTML = '<option value="">Seleccione una subruta</option>';
+        function redireccionarTiquete(index) {
+            const cantidad = parseInt(document.getElementById(`cantidad-${index}`).value);
+            const subRuta = subRutas["Siquirres-La Alegría"][index];
+            if (cantidad > 0) {
+                const url = `/Boleteria/ImprimirTiquete?subRuta=${encodeURIComponent(subRuta.nombre)}&cantidad=${encodeURIComponent(cantidad)}&precioUnitario=${encodeURIComponent(subRuta.precio)}&ruta=${encodeURIComponent("Siquirres-La Alegría")}`;
+                window.location.href = url;
             }
-        });
+        }
 
-        // Manejar subruta
-        subRutaSelect.addEventListener('change', () => {
-            cantidadSelect.disabled = subRutaSelect.value === "";
-
-            if (!cantidadSelect.disabled) {
-                cantidadSelect.innerHTML = '<option value="">Seleccione la cantidad</option>';
-                for (let i = 1; i <= 10; i++) {
-                    const option = document.createElement('option');
-                    option.value = i;
-                    option.textContent = i;
-                    cantidadSelect.appendChild(option);
-                }
-            }
-        });
-
-        // Manejar botón de imprimir
-        cantidadSelect.addEventListener('change', () => {
-            btnImprimir.disabled = cantidadSelect.value === "";
-        });
-
-        // Generar e imprimir tiquete
-        btnImprimir.addEventListener('click', () => {
-            const ruta = rutaSelect.options[rutaSelect.selectedIndex].text;
-            const subRuta = subRutaSelect.options[subRutaSelect.selectedIndex].text;
-            const precio = parseInt(subRutaSelect.value);
-            const cantidad = parseInt(cantidadSelect.value);
-            const total = precio * cantidad;
-
-            // Actualizar totales
-            totalTiquetes += cantidad;
-            totalDinero += total;
-
-            totalTiquetesSpan.textContent = totalTiquetes;
-            totalDineroSpan.textContent = totalDinero;
-
-            // Crear contenido del tiquete para imprimir
-            const tiqueteHTML = `
-                <div style="text-align: center; font-family: Arial, sans-serif; margin: 20px;">
-                    <h2>Tiquete de Viaje</h2>
-                    <p><strong>Ruta:</strong> ${ruta}</p>
-                    <p><strong>SubRuta:</strong> ${subRuta}</p>
-                    <p><strong>Cantidad:</strong> ${cantidad}</p>
-                    <p><strong>Total:</strong> ${total} colones</p>
-                </div>
-            `;
-
-            // Crear nueva ventana para impresión
-            const printWindow = window.open('', '', 'width=600,height=400');
-            printWindow.document.write(tiqueteHTML);
-            printWindow.document.close();
-            printWindow.print();
-        });
+        inicializarSubRutas();
     </script>
 </body>
 </html>

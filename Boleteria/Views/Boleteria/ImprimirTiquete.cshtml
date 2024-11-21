@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Vista Previa de Tiquete";
+    ViewBag.Title = "Tiquete de Viaje";
 }
 
 <!DOCTYPE html>
@@ -7,17 +7,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
+    <title>Tiquete de Viaje</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function imprimirTiquete() {
+            window.print();
+        }
+    </script>
 </head>
 <body>
     <div class="container my-4">
-        <h1>Puma Pardo</h1>
-        <p><strong>Ruta:</strong> @ViewBag.Ruta</p>
-        <p><strong>Horario:</strong> @ViewBag.Horario</p>
-        <p><strong>Cantidad:</strong> @ViewBag.Cantidad</p>
-        <p><strong>Total a Pagar:</strong> @ViewBag.PrecioTotal colones</p>
-
-        <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
+        <div class="card">
+            <div class="card-header text-center bg-primary text-white">
+                <h4>Tiquete de Viaje</h4>
+            </div>
+            <div class="card-body">
+                <p><strong>Ruta:</strong> @ViewBag.Ruta</p>
+                <p><strong>Subruta:</strong> @ViewBag.SubRuta</p>
+                <p><strong>Cantidad:</strong> @ViewBag.Cantidad</p>
+                <p><strong>Total:</strong> @((decimal)ViewBag.Cantidad * (decimal)ViewBag.PrecioUnitario) colones</p>
+                <p class="text-center mt-4"><strong>¡Feliz viaje!</strong></p>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button class="btn btn-success" onclick="imprimirTiquete()">Imprimir</button>
+        </div>
     </div>
 </body>
 </html>

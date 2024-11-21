@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace PumaPardo.Controllers
+namespace Boleteria.Controllers
 {
-    public class OficinaController : Controller
+    public class EquipoPumaController : Controller
     {
         public IActionResult Index()
         {

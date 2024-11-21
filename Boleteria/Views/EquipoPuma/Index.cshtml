@@ -1,113 +1,114 @@
 ﻿@{
-    ViewData["Title"] = "Equipo de Choferes";
+    ViewData["Title"] = "Equipo de Choferes Interactivo";
 }
 
-<div class="container fade-in my-5">
-    <h1 class="mt-4 text-info text-center">Conoce a Nuestros Choferes</h1>
-    <p class="lead text-center">Cada chofer en nuestro equipo aporta experiencia y dedicación.</p>
+<!-- Recursos CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 
-    <div class="row mt-5 gy-5 justify-content-center">
+<!-- Recursos JS -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container my-5">
+    <!-- Título y Descripción -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-primary animate__animated animate__fadeInDown">
+            <i class="fas fa-users me-2"></i>Equipo de Choferes
+        </h1>
+        <p class="lead text-muted animate__animated animate__fadeInUp">
+            Experiencia y compromiso en cada kilómetro recorrido.
+        </p>
+    </div>
+
+    <!-- Fila de Tarjetas -->
+    <div class="row gy-4 justify-content-center">
         <!-- Tarjeta de Chofer -->
-        <div class="col-md-4 col-sm-6 text-center driver-card">
-            <div class="card shadow-lg position-relative">
-                <div class="card-body">
-                    <img src="https://via.placeholder.com/150" alt="Chofer" class="rounded-circle driver-image mb-3">
-                    <h5 class="driver-name text-primary">Juan Pérez</h5>
-                    <p class="driver-role text-muted">Conductor Senior</p>
-                    <button class="btn btn-outline-primary btn-sm view-details-btn">Ver Detalles</button>
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow-lg position-relative driver-card">
+                <div class="card-body text-center">
+                    <img src="https://via.placeholder.com/150" alt="Foto del Chofer" class="rounded-circle driver-image mb-3">
+                    <h5 class="fw-bold text-primary">Juan Pérez</h5>
+                    <p class="text-muted">Conductor Senior</p>
+                    <button class="btn btn-outline-primary btn-sm view-details-btn">
+                        <i class="fas fa-info-circle me-2"></i>Ver Detalles
+                    </button>
                 </div>
-                <!-- Vista previa -->
-                <div class="driver-preview position-absolute p-4">
-                    <img src="https://via.placeholder.com/300" alt="Foto del Chofer" class="rounded-circle mb-3 preview-image">
-                    <h5 class="driver-name text-primary">Juan Pérez</h5>
-                    <p class="driver-role text-muted">Conductor Senior</p>
-                    <p class="driver-info">Inició: 12 de Marzo, 2015</p>
-                    <p class="driver-bio">
-                        Con más de 10 años de experiencia, Juan garantiza seguridad y comodidad en cada viaje.
-                    </p>
-                    <button class="btn btn-secondary btn-sm close-preview-btn">Cerrar</button>
+                <!-- Vista Detallada -->
+                <div class="driver-preview position-absolute p-4 bg-white shadow-lg rounded">
+                    <div class="text-center">
+                        <img src="https://via.placeholder.com/150" alt="Foto del Chofer" class="rounded-circle mb-3 preview-image">
+                        <h5 class="fw-bold text-primary">Juan Pérez</h5>
+                        <p class="text-muted">Conductor Senior</p>
+                        <p><strong>Inició:</strong> 12 de Marzo, 2015</p>
+                        <p class="text-muted">Más de 10 años garantizando seguridad y comodidad en cada viaje.</p>
+                        <button class="btn btn-secondary btn-sm close-preview-btn">
+                            <i class="fas fa-times me-2"></i>Cerrar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Añade más tarjetas de choferes aquí -->
+        <!-- Repite esta estructura para más choferes -->
     </div>
 </div>
 
+<!-- CSS Personalizado -->
 <style>
     .driver-card {
-        position: relative;
-    }
-
-    .card {
-        border: none;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-        .card:hover {
+        .driver-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
     .driver-image {
         width: 120px;
         height: 120px;
         object-fit: cover;
-        border: 4px solid #e9ecef;
+        border: 4px solid #f8f9fa;
         transition: transform 0.3s ease;
     }
 
-    .card:hover .driver-image {
+    .driver-card:hover .driver-image {
         transform: scale(1.1);
     }
 
     .driver-preview {
-        top: 100%;
+        top: 50%;
         left: 50%;
-        transform: translate(-50%, 10%);
-        opacity: 0;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        z-index: 1000;
-        position: absolute;
+        transform: translate(-50%, -50%);
+        z-index: 1050;
         display: none;
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        width: 100%;
+        max-width: 400px;
     }
 
-        .driver-preview.show {
-            display: block;
-            opacity: 1;
-            transform: translate(-50%, -10%);
-        }
-
-    .close-preview-btn {
-        margin-top: 15px;
+    .preview-image {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border: 4px solid #f8f9fa;
     }
 </style>
 
+<!-- JavaScript para Interacciones -->
 <script>
-    // Mostrar detalles del chofer
-    document.querySelectorAll('.view-details-btn').forEach((btn) => {
-        btn.addEventListener('click', function () {
-            const preview = this.closest('.card').querySelector('.driver-preview');
-            preview.style.display = 'block';
-            setTimeout(() => {
-                preview.style.opacity = '1';
-                preview.style.transform = 'translate(-50%, -10%)';
-            }, 10);
+    $(document).ready(function () {
+        // Mostrar detalles del chofer
+        $(".view-details-btn").click(function () {
+            const preview = $(this).closest(".driver-card").find(".driver-preview");
+            preview.fadeIn(300).css("display", "flex");
         });
-    });
 
-    // Ocultar detalles del chofer
-    document.querySelectorAll('.close-preview-btn').forEach((btn) => {
-        btn.addEventListener('click', function () {
-            const preview = this.closest('.driver-preview');
-            preview.style.opacity = '0';
-            preview.style.transform = 'translate(-50%, 10%)';
-            setTimeout(() => {
-                preview.style.display = 'none';
-            }, 300);
+        // Ocultar detalles del chofer
+        $(".close-preview-btn").click(function () {
+            const preview = $(this).closest(".driver-preview");
+            preview.fadeOut(300);
         });
     });
 </script>

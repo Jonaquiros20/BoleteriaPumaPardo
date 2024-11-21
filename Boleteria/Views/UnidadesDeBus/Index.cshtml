@@ -1,100 +1,158 @@
 ﻿@{
-    ViewData["Title"] = "Unidades de Bus";
+    ViewData["Title"] = "Unidades de Bus Interactivas";
 }
 
-<div class="container">
-    <h1 class="mt-4 text-warning text-center">Unidades de Bus</h1>
-    <p class="lead text-center">Consulta el estado y detalles de nuestras unidades.</p>
+<!-- Recursos CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-    <table class="table table-hover table-bordered mt-4">
-        <thead class="table-dark text-center">
-            <tr>
-                <th>#</th>
-                <th>Imagen</th>
-                <th>Placa</th>
-                <th>Modelo</th>
-                <th>Capacidad</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Fila 1 -->
-            <tr class="text-center unit-row" data-img="https://via.placeholder.com/600" data-info="Mercedes-Benz 2020 - ABC-123">
-                <td>1</td>
-                <td>
-                    <img src="https://via.placeholder.com/100" alt="Bus ABC-123" class="bus-image">
-                </td>
-                <td>ABC-123</td>
-                <td>Mercedes-Benz 2020</td>
-                <td>50 pasajeros</td>
-            </tr>
-            <!-- Fila 2 -->
-            <tr class="text-center unit-row" data-img="https://via.placeholder.com/600" data-info="Volvo 2018 - DEF-456">
-                <td>2</td>
-                <td>
-                    <img src="https://via.placeholder.com/100" alt="Bus DEF-456" class="bus-image">
-                </td>
-                <td>DEF-456</td>
-                <td>Volvo 2018</td>
-                <td>45 pasajeros</td>
-            </tr>
-            <!-- Fila 3 -->
-            <tr class="text-center unit-row" data-img="https://via.placeholder.com/600" data-info="Scania 2019 - GHI-789">
-                <td>3</td>
-                <td>
-                    <img src="https://via.placeholder.com/100" alt="Bus GHI-789" class="bus-image">
-                </td>
-                <td>GHI-789</td>
-                <td>Scania 2019</td>
-                <td>60 pasajeros</td>
-            </tr>
-        </tbody>
-    </table>
+<!-- Recursos JS -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container my-5">
+    <!-- Título y descripción -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-warning animate__animated animate__fadeInDown">
+            <i class="fas fa-bus me-2"></i>Unidades de Bus
+        </h1>
+        <p class="lead text-muted animate__animated animate__fadeInUp">
+            Explora nuestras unidades con detalles completos y fotografías destacadas.
+        </p>
+    </div>
+
+    <!-- Botón para agregar unidad -->
+    <div class="text-end mb-4">
+        <button class="btn btn-success" id="addBusButton">
+            <i class="fas fa-plus"></i> Agregar Unidad
+        </button>
+    </div>
+
+    <!-- Tabla de Unidades -->
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-striped align-middle shadow-lg" id="busTable">
+            <thead class="table-warning text-center">
+                <tr>
+                    <th>#</th>
+                    <th>Imagen</th>
+                    <th>Placa</th>
+                    <th>Modelo</th>
+                    <th>Capacidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas dinámicas -->
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="unitModal" tabindex="-1" aria-labelledby="unitModalLabel" aria-hidden="true">
+<!-- Modal para agregar unidad -->
+<div class="modal fade" id="addBusModal" tabindex="-1" aria-labelledby="addBusModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="unitModalLabel">Detalles de la Unidad</h5>
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="addBusModalLabel"><i class="fas fa-plus me-2"></i>Agregar Unidad</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-            <div class="modal-body text-center">
-                <img id="modalImage" src="" alt="Unidad de Bus" class="img-fluid mb-3 rounded">
-                <p id="modalInfo" class="text-muted"></p>
+            <div class="modal-body">
+                <form id="addBusForm">
+                    <div class="mb-3">
+                        <label for="busImage" class="form-label">Imagen de la unidad</label>
+                        <input type="file" class="form-control" id="busImage" accept="image/*">
+                        <img id="previewImage" src="#" alt="Vista previa" class="img-fluid mt-3 d-none rounded shadow">
+                    </div>
+                    <div class="mb-3">
+                        <label for="busPlate" class="form-label">Placa</label>
+                        <input type="text" class="form-control" id="busPlate" placeholder="Ingrese la placa" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="busModel" class="form-label">Modelo</label>
+                        <input type="text" class="form-control" id="busModel" placeholder="Ingrese el modelo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="busCapacity" class="form-label">Capacidad</label>
+                        <input type="number" class="form-control" id="busCapacity" placeholder="Ingrese la capacidad" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Agregar Unidad</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Estilos -->
 <style>
-    /* Imagen de autobuses */
     .bus-image {
         width: 100px;
         height: 60px;
         object-fit: cover;
         border-radius: 5px;
         border: 1px solid #ddd;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .unit-row:hover {
-        background-color: #f8f9fa;
-        cursor: pointer;
-    }
+        .bus-image:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
 </style>
 
+<!-- JavaScript -->
 <script>
-    // Seleccionar filas y mostrar el modal
-    document.querySelectorAll('.unit-row').forEach((row) => {
-        row.addEventListener('click', function () {
-            const imgSrc = this.getAttribute('data-img');
-            const info = this.getAttribute('data-info');
+    $(document).ready(function () {
+        let busCounter = 0;
 
-            document.getElementById('modalImage').src = imgSrc;
-            document.getElementById('modalInfo').textContent = info;
+        // Mostrar vista previa de la imagen
+        $("#busImage").on("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#previewImage").attr("src", e.target.result).removeClass("d-none");
+                };
+                reader.readAsDataURL(file);
+            } else {
+                $("#previewImage").addClass("d-none");
+            }
+        });
 
-            const modal = new bootstrap.Modal(document.getElementById('unitModal'));
-            modal.show();
+        // Abrir modal de agregar unidad
+        $("#addBusButton").on("click", function () {
+            $("#addBusModal").modal("show");
+        });
+
+        // Agregar nueva unidad a la tabla
+        $("#addBusForm").on("submit", function (event) {
+            event.preventDefault();
+
+            const imgSrc = $("#previewImage").attr("src");
+            const plate = $("#busPlate").val();
+            const model = $("#busModel").val();
+            const capacity = $("#busCapacity").val();
+
+            if (imgSrc && plate && model && capacity) {
+                busCounter++;
+                const newRow = `
+                        <tr class="text-center">
+                            <td>${busCounter}</td>
+                            <td><img src="${imgSrc}" alt="Bus ${plate}" class="bus-image"></td>
+                            <td>${plate}</td>
+                            <td>${model}</td>
+                            <td>${capacity} pasajeros</td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-eye"></i> Ver Detalles
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                $("#busTable tbody").append(newRow);
+                $("#addBusModal").modal("hide");
+                $("#addBusForm")[0].reset();
+                $("#previewImage").addClass("d-none");
+            }
         });
     });
 </script>

@@ -1,28 +1,295 @@
 ﻿@{
-    ViewData["Title"] = "Facturas";
+    ViewData["Title"] = "Home Page";
 }
 
-<div class="container fade-in">
-    <h1 class="mt-4 text-primary text-center">Facturación</h1>
-    <p class="lead text-center">Administra tus facturas de manera eficiente.</p>
+<div class="container-fluid">
 
-    <div class="card mt-4 shadow">
-        <div class="card-body">
-            <h5 class="card-title">Opciones de Facturación</h5>
-            <ul class="list-group">
-                <li class="list-group-item"><i class="fas fa-plus-circle"></i> <a href="#">Generar nueva factura</a></li>
-                <li class="list-group-item"><i class="fas fa-search"></i> <a href="#">Consultar facturas existentes</a></li>
-                <li class="list-group-item"><i class="fas fa-trash-alt"></i> <a href="#">Eliminar facturas</a></li>
-            </ul>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Panel de Control de Salud</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generar Reporte de Salud
+        </a>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Patient Visits (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Visitas de Pacientes (Mensual)
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">1,200</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments (Annual) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Citas Médicas (Anual)
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">14,500</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Progress Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Progreso de Tareas
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">70%</div>
+                                </div>
+                                <div class="col">
+                                    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-info" role="progressbar"
+                                             style="width: 70%" aria-valuenow="70" aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Lab Results Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Resultados de Laboratorio Pendientes
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">15</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-flask fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<script>
-    // Animación con GSAP para el fade-in del contenido
-    gsap.from(".fade-in", {
-        duration: 1,
-        opacity: 0,
-        y: 50,
-        ease: "power3.out",
-    });
-</script>
+
+    <!-- Content Row -->
+
+    <div class="row">
+
+        <!-- Health Overview Area Chart -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Resumen de Salud</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Opciones:</div>
+                            <a class="dropdown-item" href="#">Ver Detalles</a>
+                            <a class="dropdown-item" href="#">Exportar</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Configuración</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="myHealthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Health Sources Pie Chart -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Fuentes de Salud</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                             aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Opciones:</div>
+                            <a class="dropdown-item" href="#">Ver Detalles</a>
+                            <a class="dropdown-item" href="#">Exportar</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Configuración</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="myHealthPieChart"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small">
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-primary"></i> Directo
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-success"></i> Referidos
+                        </span>
+                        <span class="mr-2">
+                            <i class="fas fa-circle text-info"></i> Otros
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Content Column -->
+        <div class="col-lg-6 mb-4">
+
+            <!-- Health Projects Card Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Proyectos de Salud</h6>
+                </div>
+                <div class="card-body">
+                    <h4 class="small font-weight-bold">
+                        Migración de Datos Médicos <span class="float-right">30%</span>
+                    </h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 30%"
+                             aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">
+                        Monitoreo de Pacientes <span class="float-right">55%</span>
+                    </h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 55%"
+                             aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">
+                        Base de Datos de Pacientes <span class="float-right">75%</span>
+                    </h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar"
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 75%"
+                             aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                        <h4 class="small font-weight-bold">
+                            Sistema de Facturación Médica <span class="float-right">90%</span>
+                        </h4>
+                        <div class="progress mb-4">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 90%"
+                                 aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color System -->
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card bg-primary text-white shadow">
+                            <div class="card-body">
+                                Primario
+                                <div class="text-white-50 small">#4e73df</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card bg-success text-white shadow">
+                            <div class="card-body">
+                                Exitoso
+                                <div class="text-white-50 small">#1cc88a</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card bg-info text-white shadow">
+                            <div class="card-body">
+                                Informativo
+                                <div class="text-white-50 small">#36b9cc</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card bg-warning text-white shadow">
+                            <div class="card-body">
+                                Advertencia
+                                <div class="text-white-50 small">#f6c23e</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card bg-danger text-white shadow">
+                            <div class="card-body">
+                                Peligro
+                                <div class="text-white-50 small">#e74a3b</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="card bg-secondary text-white shadow">
+                            <div class="card-body">
+                                Secundario
+                                <div class="text-white-50 small">#858796</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+
+                <!-- Approach -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Nuestro Enfoque de Salud</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>En nuestro centro de salud, adoptamos un enfoque integral para el bienestar de nuestros pacientes. Nos enfocamos en la prevención, el diagnóstico preciso y el tratamiento eficaz para garantizar la mejor calidad de vida posible.</p>
+                        <p class="mb-0">Nuestro compromiso es brindar atención personalizada, utilizando tecnología de punta y un equipo de profesionales altamente capacitados.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>

@@ -82,6 +82,24 @@
     </div>
 </div>
 
+<!-- Modal para Ver Detalles -->
+<div class="modal fade" id="busDetailsModal" tabindex="-1" aria-labelledby="busDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="busDetailsModalLabel"><i class="fas fa-bus me-2"></i>Detalles de la Unidad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="detailsImage" src="#" alt="Imagen del bus" class="img-fluid rounded shadow mb-3" style="max-height: 200px;">
+                <h5 id="detailsPlate" class="mb-1"></h5>
+                <p id="detailsModel" class="mb-1"></p>
+                <p id="detailsCapacity"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Estilos -->
 <style>
     .bus-image {
@@ -135,24 +153,39 @@
             if (imgSrc && plate && model && capacity) {
                 busCounter++;
                 const newRow = `
-                        <tr class="text-center">
-                            <td>${busCounter}</td>
-                            <td><img src="${imgSrc}" alt="Bus ${plate}" class="bus-image"></td>
-                            <td>${plate}</td>
-                            <td>${model}</td>
-                            <td>${capacity} pasajeros</td>
-                            <td>
-                                <button class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-eye"></i> Ver Detalles
-                                </button>
-                            </td>
-                        </tr>
-                    `;
+                            <tr class="text-center">
+                                <td>${busCounter}</td>
+                                <td><img src="${imgSrc}" alt="Bus ${plate}" class="bus-image"></td>
+                                <td>${plate}</td>
+                                <td>${model}</td>
+                                <td>${capacity} pasajeros</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm viewDetailsButton" data-img="${imgSrc}" data-plate="${plate}" data-model="${model}" data-capacity="${capacity}">
+                                        <i class="fas fa-eye"></i> Ver Detalles
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
                 $("#busTable tbody").append(newRow);
                 $("#addBusModal").modal("hide");
                 $("#addBusForm")[0].reset();
                 $("#previewImage").addClass("d-none");
             }
+        });
+
+        // Mostrar detalles en el modal
+        $(document).on("click", ".viewDetailsButton", function () {
+            const imgSrc = $(this).data("img");
+            const plate = $(this).data("plate");
+            const model = $(this).data("model");
+            const capacity = $(this).data("capacity");
+
+            $("#detailsImage").attr("src", imgSrc);
+            $("#detailsPlate").text(`Placa: ${plate}`);
+            $("#detailsModel").text(`Modelo: ${model}`);
+            $("#detailsCapacity").text(`Capacidad: ${capacity} pasajeros`);
+
+            $("#busDetailsModal").modal("show");
         });
     });
 </script>

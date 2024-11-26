@@ -4,9 +4,10 @@ namespace Boleteria.Controllers
 {
     public class CierreDeCajaController : Controller
     {
-        public IActionResult CierreDeCaja()
+        public IActionResult Index()
         {
-            return View();
+            return View(); // Retorna la vista principal de CierreDeCaja
         }
+
     }
 }

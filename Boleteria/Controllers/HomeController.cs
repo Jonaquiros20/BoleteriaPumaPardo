@@ -24,6 +24,11 @@ namespace Boleteria.Controllers
             return RedirectToAction("Index", "Boleteria");
            
         }
+        public IActionResult Facturas()
+        {
+            // Redirige al controlador de Facturas
+            return RedirectToAction("Index", "CierreDeCaja");
+        }
 
         public IActionResult Privacy()
         {

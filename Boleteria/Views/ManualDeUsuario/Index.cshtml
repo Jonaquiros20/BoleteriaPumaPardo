@@ -1,0 +1,194 @@
+﻿@{
+    ViewData["Title"] = "Manual De Usuario";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            width: 80%;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 60%;
+            margin: auto;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .menu-item {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #ffe599;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            border: 2px solid #f6b26b;
+        }
+
+            .menu-item:hover {
+                background-color: #f6b26b;
+                transform: scale(1.05);
+            }
+
+            .menu-item i {
+                font-size: 1.8rem;
+                margin-right: 15px;
+                color: #6fa8dc;
+                transition: transform 0.3s ease;
+            }
+
+            .menu-item:hover i {
+                transform: scale(1.2);
+                color: #3c78d8;
+            }
+
+            .menu-item span {
+                font-size: 1.2rem;
+                flex-grow: 1;
+                color: #333;
+            }
+
+        .instructions {
+            display: none;
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            background: linear-gradient(135deg, #f6b26b, #ffe599);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 2px solid #f6b26b;
+            color: #333;
+            text-align: left;
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+            .instructions.active {
+                display: block;
+                opacity: 1;
+                transform: translateY(-50%) scale(1.05);
+            }
+
+        .menu.hidden {
+            transform: translateX(-150%);
+            opacity: 0;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: darkred;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+            .close:hover {
+                background-color: darkred;
+            }
+
+        .instructions-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .instructions-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .instructions p {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <div class="menu-item" data-instructions="Cuando ingresas a esta pagina, puedes ver la flota de Puma Pardo. Con sus respectivas fechas de ingreso, expediente, vacaciones, incapacidades">
+                <i class="fas fa-users"></i>
+                <span>Equipo Puma Pardo</span>
+            </div>
+            <div class="menu-item" data-instructions="Aquí puedes gestionar las facturas de la empresa, consultar su estado y realizar pagos pendientes.">
+                <i class="fas fa-file-invoice"></i>
+                <span>Facturas</span>
+            </div>
+            <div class="menu-item" data-instructions="Consulta y analiza los cierres de caja diarios para una mejor gestión financiera.">
+                <i class="fas fa-cash-register"></i>
+                <span>Ver Cierres de Caja</span>
+            </div>
+            <div class="menu-item" data-instructions="Administra las unidades de transporte de la empresa, incluyendo su mantenimiento y horarios.">
+                <i class="fas fa-bus"></i>
+                <span>Unidades</span>
+            </div>
+        </div>
+        <div class="instructions">
+            <button class="close">X</button>
+            <div class="instructions-title">Instrucciones</div>
+            <div class="instructions-content">
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuItems = document.querySelectorAll('.menu-item');
+        const instructionsBox = document.querySelector('.instructions');
+        const instructionsText = instructionsBox.querySelector('.instructions-content p');
+        const closeButton = instructionsBox.querySelector('.close');
+        const menu = document.querySelector('.menu');
+
+        // Mostrar instrucciones al hacer clic
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const instructions = item.getAttribute('data-instructions');
+                instructionsText.textContent = instructions;
+                instructionsBox.classList.add('active');
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Ocultar instrucciones y volver al menú
+        closeButton.addEventListener('click', () => {
+            instructionsBox.classList.remove('active');
+            menu.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

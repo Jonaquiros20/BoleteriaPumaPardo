@@ -16,7 +16,7 @@
     <div class="background-gradient"></div> <!-- Fondo suave minimalista -->
 
     <div class="container text-center mt-5">
-        <h1 class="text-primary mb-4 animate-title">Bienvenido a Puma Pardo</h1>
+        <h1 class="text-primary mb-4 animate-title">Puma Pardo</h1>
         <p>Selecciona una opción para continuar:</p>
         <div class="row mt-4 justify-content-center">
             <!-- Oficina -->
@@ -33,11 +33,12 @@
 
             <!-- Boletería -->
             <div class="col-md-2">
-                <a asp-controller="Boleteria" asp-action="Index" class="text-decoration-none">
+                <a asp-controller="Facturas" asp-action="Index" class="text-decoration-none">
                     <div class="card bg-success text-white shadow card-hover">
                         <div class="card-body text-center">
-                            <i class="fas fa-ticket-alt" style="font-size: 2.5rem;"></i>
-                            <p class="mt-2">Boletería</p>
+                            
+                            <i class="fa-solid fa-file-invoice" style="font-size: 2.5rem;"></i>
+                            <p class="mt-2">Facturas</p>
                         </div>
                     </div>
                 </a>
@@ -48,8 +49,9 @@
                 <a asp-controller="CierreDeCaja" asp-action="Index" class="text-decoration-none">
                     <div class="card bg-secondary text-white shadow card-hover">
                         <div class="card-body text-center">
-                            <i class="fas fa-file-invoice" style="font-size: 2.5rem;"></i>
-                            <p class="mt-2">Facturas</p>
+                        
+                            <i class="fa-solid fa-cash-register" style="font-size: 2.5rem;"></i>
+                            <p class="mt-2">Cierre de Caja</p>
                         </div>
                     </div>
                 </a>
@@ -61,7 +63,7 @@
                     <div class="card bg-info text-white shadow card-hover">
                         <div class="card-body text-center">
                             <i class="fas fa-users" style="font-size: 2.5rem;"></i>
-                            <p class="mt-2">Equipo Puma</p>
+                            <p class="mt-2">Administración Puma</p>
                         </div>
                     </div>
                 </a>
@@ -73,7 +75,7 @@
                     <div class="card bg-warning text-white shadow card-hover">
                         <div class="card-body text-center">
                             <i class="fas fa-bus" style="font-size: 2.5rem;"></i>
-                            <p class="mt-2">Unidades de Bus</p>
+                            <p class="mt-2">Unidades</p>
                         </div>
                     </div>
                 </a>

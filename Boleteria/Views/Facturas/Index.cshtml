@@ -16,10 +16,10 @@
     <!-- Encabezado -->
     <div class="d-flex justify-content-between align-items-center">
         <h1 class="h3 text-primary animate__animated animate__fadeInDown">
-            <i class="fas fa-file-invoice-dollar me-2"></i>Gestor de Facturas 
+            <i class="fas fa-file-invoice-dollar me-2"></i>Gestor de Facturas
         </h1>
         <button class="btn btn-primary btn-sm shadow" id="btnNuevaFactura">
-            <i class="fas fa-plus-circle me-2"></i>Nueva Factura
+            <i class="fas fa-plus-circle me-2"></i>Agregar Factura
         </button>
     </div>
 
@@ -28,61 +28,7 @@
         <h4 class="text-success">
             <i class="fas fa-check-circle me-2 animate__animated animate__fadeInLeft"></i>Proveedores Pagados
         </h4>
-        <div class="accordion" id="pagadosAccordion">
-            <!-- Ejemplo Proveedor Pagado -->
-            <div class="accordion-item border-success">
-                <h2 class="accordion-header" id="headingProveedor1">
-                    <button class="accordion-button text-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProveedor1" aria-expanded="true" aria-controls="collapseProveedor1">
-                        <i class="fas fa-user-check me-2"></i>Juan Suministros
-                    </button>
-                </h2>
-                <div id="collapseProveedor1" class="accordion-collapse collapse show" aria-labelledby="headingProveedor1" data-bs-parent="#pagadosAccordion">
-                    <div class="accordion-body bg-light">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-success">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Factura</th>
-                                    <th>Fecha</th>
-                                    <th>Total</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>FAC-00123</td>
-                                    <td>2024-11-01</td>
-                                    <td>$1,200.00</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-secondary">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>FAC-00124</td>
-                                    <td>2024-11-15</td>
-                                    <td>$800.00</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-secondary">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="accordion" id="pagadosAccordion"></div>
     </div>
 
     <!-- Proveedores Pendientes -->
@@ -90,75 +36,180 @@
         <h4 class="text-warning">
             <i class="fas fa-exclamation-circle me-2 animate__animated animate__fadeInRight"></i>Proveedores Pendientes
         </h4>
-        <div class="accordion" id="pendientesAccordion">
-            <!-- Ejemplo Proveedor Pendiente -->
-            <div class="accordion-item border-warning">
-                <h2 class="accordion-header" id="headingProveedor3">
-                    <button class="accordion-button text-warning collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProveedor3" aria-expanded="false" aria-controls="collapseProveedor3">
-                        <i class="fas fa-user-clock me-2"></i>Central de Papelería
-                    </button>
-                </h2>
-                <div id="collapseProveedor3" class="accordion-collapse collapse" aria-labelledby="headingProveedor3" data-bs-parent="#pendientesAccordion">
-                    <div class="accordion-body bg-light">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-warning">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Factura</th>
-                                    <th>Fecha</th>
-                                    <th>Total</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>FAC-00340</td>
-                                    <td>2024-11-10</td>
-                                    <td>$600.00</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-secondary">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>FAC-00341</td>
-                                    <td>2024-11-18</td>
-                                    <td>$400.00</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-secondary">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-warning">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="accordion" id="pendientesAccordion"></div>
+    </div>
+</div>
+
+<!-- Modal: Visualizar Factura -->
+<div class="modal fade" id="modalVisualizar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="visualizarModalLabel">Detalle de Factura</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Proveedor:</strong> <span id="modalProveedor"></span></p>
+                <p><strong>Factura:</strong> <span id="modalFactura"></span></p>
+                <p><strong>Fecha:</strong> <span id="modalFecha"></span></p>
+                <p><strong>Total:</strong> <span id="modalTotal"></span></p>
+                <div id="modalAccionPendiente" class="d-none">
+                    <button class="btn btn-success w-100" id="btnPagar">Pagar Factura</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Animaciones Interactivas -->
+<!-- Modal: Agregar Factura -->
+<div class="modal fade" id="modalAgregarFactura" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Agregar Factura</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAgregarFactura">
+                    <div class="mb-3">
+                        <label for="proveedor" class="form-label">Proveedor</label>
+                        <input type="text" class="form-control" id="proveedor" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="factura" class="form-label">Factura</label>
+                        <input type="text" class="form-control" id="factura" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="fecha" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="total" class="form-label">Total</label>
+                        <input type="number" class="form-control" id="total" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Agregar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script -->
 <script>
-    $(document).ready(function () {
-        // Botón para nueva factura
+    let pendientes = [];
+    let pagados = [];
+    let facturaSeleccionada = null;
+
+    function renderizarListas() {
+        const renderizar = (lista, accordionId, esPagada = false) => {
+            const container = $(accordionId);
+            container.html("");
+            lista.forEach((factura, index) => {
+                container.append(`
+                    <div class="accordion-item border-${esPagada ? "success" : "warning"}">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button text-${esPagada ? "success" : "warning"} collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#factura${index}" aria-expanded="false">
+                                <i class="fas fa-${esPagada ? "user-check" : "user-clock"} me-2"></i>${factura.proveedor}
+                            </button>
+                        </h2>
+                        <div id="factura${index}" class="accordion-collapse collapse">
+                            <div class="accordion-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Factura</th>
+                                            <th>Fecha</th>
+                                            <th>Total</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>${index + 1}</td>
+                                            <td>${factura.factura}</td>
+                                            <td>${factura.fecha}</td>
+                                            <td>$${factura.total}</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-secondary btn-visualizar" data-index="${index}" data-pendiente="${!esPagada}">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger btn-eliminar" data-index="${index}" data-pendiente="${!esPagada}">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+        };
+        renderizar(pendientes, "#pendientesAccordion");
+        renderizar(pagados, "#pagadosAccordion", true);
+    }
+
+    $(document).ready(() => {
+        // Abrir modal desde el botón del encabezado
         $("#btnNuevaFactura").on("click", function () {
-            alert("Funcionalidad de crear factura aún no implementada.");
+            $("#modalAgregarFactura").modal("show");
         });
 
-        // Animación en el encabezado al cargar
-        $(".accordion-button").on("click", function () {
-            $(this).toggleClass("animate__pulse");
+        // Agregar Factura
+        $("#formAgregarFactura").on("submit", function (e) {
+            e.preventDefault();
+            const nuevaFactura = {
+                proveedor: $("#proveedor").val(),
+                factura: $("#factura").val(),
+                fecha: $("#fecha").val(),
+                total: $("#total").val(),
+            };
+            pendientes.push(nuevaFactura);
+            renderizarListas();
+            $("#modalAgregarFactura").modal("hide");
+            this.reset();
+        });
+
+        // Visualizar Factura
+        $(document).on("click", ".btn-visualizar", function () {
+            const index = $(this).data("index");
+            const esPendiente = $(this).data("pendiente");
+            facturaSeleccionada = esPendiente ? pendientes[index] : pagados[index];
+            $("#modalProveedor").text(facturaSeleccionada.proveedor);
+            $("#modalFactura").text(facturaSeleccionada.factura);
+            $("#modalFecha").text(facturaSeleccionada.fecha);
+            $("#modalTotal").text(`$${facturaSeleccionada.total}`);
+            if (esPendiente) {
+                $("#modalAccionPendiente").removeClass("d-none");
+            } else {
+                $("#modalAccionPendiente").addClass("d-none");
+            }
+            $("#modalVisualizar").modal("show");
+        });
+
+        // Eliminar Factura
+        $(document).on("click", ".btn-eliminar", function () {
+            const index = $(this).data("index");
+            const esPendiente = $(this).data("pendiente");
+            if (esPendiente) {
+                pendientes.splice(index, 1);
+            } else {
+                pagados.splice(index, 1);
+            }
+            renderizarListas();
+        });
+
+        // Pagar Factura
+        $("#btnPagar").on("click", function () {
+            const index = pendientes.findIndex(f => f === facturaSeleccionada);
+            if (index !== -1) {
+                pagados.push(facturaSeleccionada);
+                pendientes.splice(index, 1);
+                renderizarListas();
+                $("#modalVisualizar").modal("hide");
+            }
         });
     });
 </script>

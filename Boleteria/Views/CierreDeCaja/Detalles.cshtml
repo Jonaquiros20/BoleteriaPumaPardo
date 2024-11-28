@@ -1,0 +1,47 @@
+﻿@model Boleteria.Controllers.CierreDeCaja
+
+@{
+    ViewData["Title"] = "Detalles del Cierre de Caja";
+}
+
+<!-- Estilos básicos -->
+<style>
+    .ocultar-imprimir {
+        display: none !important; /* Elementos ocultos al imprimir */
+    }
+</style>
+
+<div class="container my-5">
+    <div class="card shadow-lg mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <h5 class="card-title"><strong>@Model.Titulo</strong></h5>
+            <p><strong>Fecha:</strong> @Model.Fecha</p>
+            <p><strong>Monto:</strong> @Model.Monto</p>
+            <img src="@Model.ImagenFactura" alt="Factura" class="img-fluid mt-3">
+        </div>
+    </div>
+
+    <!-- Botones y otros elementos que deben ocultarse al imprimir -->
+    <div id="acciones" class="text-center mt-4">
+        <button onclick="imprimirPagina()" class="btn btn-primary">
+            <i class="bi bi-printer"></i> Imprimir
+        </button>
+        <a href="/CierreDeCaja/Filtrar?tipo=diario" class="btn btn-secondary">Volver</a>
+    </div>
+</div>
+
+<!-- Script para manejar visibilidad al imprimir -->
+<script>
+    function imprimirPagina() {
+        // Oculta los elementos no deseados
+        document.getElementById('acciones').classList.add('ocultar-imprimir');
+
+        // Inicia la impresión
+        window.print();
+
+        // Restablece la visibilidad después de la impresión
+        window.onafterprint = function () {
+            document.getElementById('acciones').classList.remove('ocultar-imprimir');
+        };
+    }
+</script>

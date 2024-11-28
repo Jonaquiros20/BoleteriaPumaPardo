@@ -1,152 +1,45 @@
 ﻿@{
     ViewData["Title"] = "Cierres de Caja";
+    var tipo = ViewBag.Tipo ?? "diario"; // Valor por defecto es "diario"
+    var cierres = Model ?? new List<Boleteria.Controllers.CierreDeCaja>();
 }
 
 <div class="container my-5">
-    <h1 class="text-center text-primary mb-4">📅 Futuros Cierres de Caja</h1>
-    <p class="text-center text-muted">Visualiza los cierres de caja programados según el periodo de tiempo.</p>
+    <h1 class="text-center text-primary mb-4">📅 Próximos Cierres de Caja</h1>
+    <p class="text-center text-muted">Consulta y administra los cierres de caja programados de manera rápida y eficiente.</p>
 
-    <!-- Selector de periodos -->
-    <div class="text-center mb-5">
-        <div class="btn-group" role="group" aria-label="Periodos de Cierres">
-            <button class="btn btn-outline-primary period-btn" data-period="day">Día</button>
-            <button class="btn btn-outline-primary period-btn" data-period="week">Semana</button>
-            <button class="btn btn-outline-primary period-btn" data-period="fortnight">Quincena</button>
-            <button class="btn btn-outline-primary period-btn" data-period="month">Mes</button>
-            <button class="btn btn-outline-primary period-btn" data-period="year">Año</button>
-        </div>
+    <!-- Botones de filtro -->
+    <div class="d-flex justify-content-center gap-2 mb-4">
+        <a href="/CierreDeCaja/Filtrar?tipo=diario" class="btn btn-outline-primary @(tipo == "diario" ? "active" : "")">Hoy</a>
+        <a href="/CierreDeCaja/Filtrar?tipo=semanal" class="btn btn-outline-primary @(tipo == "semanal" ? "active" : "")">Semana</a>
+        <a href="/CierreDeCaja/Filtrar?tipo=quincenal" class="btn btn-outline-primary @(tipo == "quincenal" ? "active" : "")">Quincena</a>
+        <a href="/CierreDeCaja/Filtrar?tipo=mensual" class="btn btn-outline-primary @(tipo == "mensual" ? "active" : "")">Mes</a>
+        <a href="/CierreDeCaja/Filtrar?tipo=anual" class="btn btn-outline-primary @(tipo == "anual" ? "active" : "")">Año</a>
     </div>
 
-    <!-- Contenedor de datos -->
-    <div id="closures-container" class="d-flex flex-wrap justify-content-center gap-4">
-        <!-- Las tarjetas se generarán dinámicamente -->
+    <!-- Lista de cierres -->
+    <div class="row">
+        @foreach (var cierre in cierres)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow">
+                    <img src="@cierre.ImagenFactura" class="card-img-top" alt="Factura">
+                    <div class="card-body">
+                        <h5 class="card-title">@cierre.Titulo</h5>
+                        <p><strong>Fecha:</strong> @cierre.Fecha</p>
+                        <p><strong>Monto:</strong> @cierre.Monto</p>
+                        <form method="get" action="/CierreDeCaja/Detalles">
+                            <input type="hidden" name="Titulo" value="@cierre.Titulo" />
+                            <input type="hidden" name="Fecha" value="@cierre.Fecha" />
+                            <input type="hidden" name="Monto" value="@cierre.Monto" />
+                            <input type="hidden" name="ImagenFactura" value="@cierre.ImagenFactura" />
+                            <button type="submit" class="btn btn-primary w-100">
+                                Ver Detalles
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
-
-<style>
-    /* Animaciones y estilos generales */
-    .btn-group .btn {
-        transition: all 0.3s ease;
-    }
-
-        .btn-group .btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-    .closure-card {
-        width: 250px;
-        background: white;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        transform: scale(0.9);
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-
-        .closure-card:hover {
-            transform: scale(1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .closure-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
-        .closure-card h5 {
-            font-size: 1.2rem;
-            color: #34344a;
-        }
-
-        .closure-card p {
-            font-size: 0.9rem;
-            color: #6c757d;
-        }
-
-        .closure-card .btn {
-            width: 100%;
-            border-radius: 0;
-            border-top: 1px solid #ddd;
-        }
-
-    /* Transiciones de tarjetas */
-    .fade-in {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-</style>
-
-<script>
-    // Simular datos
-    const closuresData = {
-        day: [
-            { id: 1, title: "Cierre de Caja", date: "21 Nov, 2024", amount: "$1,200", img: "https://via.placeholder.com/300" },
-        ],
-        week: [
-            { id: 2, title: "Cierre de Caja Semana 47", date: "27 Nov, 2024", amount: "$8,500", img: "https://via.placeholder.com/300" },
-        ],
-        fortnight: [
-            { id: 3, title: "Cierre Quincenal", date: "30 Nov, 2024", amount: "$15,000", img: "https://via.placeholder.com/300" },
-        ],
-        month: [
-            { id: 4, title: "Cierre Mensual", date: "30 Nov, 2024", amount: "$32,000", img: "https://via.placeholder.com/300" },
-        ],
-        year: [
-            { id: 5, title: "Cierre Anual", date: "31 Dic, 2024", amount: "$380,000", img: "https://via.placeholder.com/300" },
-        ],
-    };
-
-    const container = document.getElementById("closures-container");
-    const buttons = document.querySelectorAll(".period-btn");
-
-    // Cargar datos al hacer clic en un botón
-    buttons.forEach(button => {
-        button.addEventListener("click", () => {
-            // Remover activos previos
-            buttons.forEach(btn => btn.classList.remove("active"));
-            button.classList.add("active");
-
-            // Cargar datos
-            const period = button.getAttribute("data-period");
-            loadClosures(period);
-        });
-    });
-
-    function loadClosures(period) {
-        const data = closuresData[period] || [];
-        container.innerHTML = ""; // Limpiar contenedor
-
-        data.forEach(closure => {
-            const card = document.createElement("div");
-            card.className = "closure-card fade-in";
-
-            card.innerHTML = `
-                <img src="${closure.img}" alt="${closure.title}">
-                <div class="p-3">
-                    <h5>${closure.title}</h5>
-                    <p>Fecha: ${closure.date}</p>
-                    <p>Monto: ${closure.amount}</p>
-                </div>
-                <button class="btn btn-outline-primary">Ver Detalles</button>
-            `;
-
-            container.appendChild(card);
-
-            // Retrasar la animación para cada tarjeta
-            setTimeout(() => {
-                card.classList.add("visible");
-            }, 100);
-        });
-    }
-
-    // Cargar por defecto los cierres del día
-    loadClosures("day");
-</script>

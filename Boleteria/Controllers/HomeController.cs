@@ -18,12 +18,7 @@ namespace Boleteria.Controllers
             return View(); // Busca Views/Home/Oficina.cshtml
         }
 
-        public IActionResult Boleteria()
-        {
-            // Redirige al controlador de boletería
-            return RedirectToAction("Index", "Boleteria");
-           
-        }
+       
         public IActionResult Facturas()
         {
             // Redirige al controlador de Facturas

@@ -29,8 +29,8 @@
             <div class="card shadow-lg position-relative driver-card">
                 <div class="card-body text-center">
                     <img src="https://via.placeholder.com/150" alt="Foto del Chofer" class="rounded-circle driver-image mb-3">
-                    <h5 class="fw-bold text-primary">Juan Pérez</h5>
-                    <p class="text-muted">Conductor Senior</p>
+                    <h5 class="fw-bold text-primary driver-name">Juan Pérez</h5>
+                    <p class="text-muted driver-role">Conductor Senior</p>
                     <button class="btn btn-outline-primary btn-sm view-details-btn">
                         <i class="fas fa-info-circle me-2"></i>Ver Detalles
                     </button>
@@ -39,11 +39,21 @@
                 <div class="driver-preview position-absolute p-4 bg-white shadow-lg rounded">
                     <div class="text-center">
                         <img src="https://via.placeholder.com/150" alt="Foto del Chofer" class="rounded-circle mb-3 preview-image">
-                        <h5 class="fw-bold text-primary">Juan Pérez</h5>
-                        <p class="text-muted">Conductor Senior</p>
-                        <p><strong>Inició:</strong> 12 de Marzo, 2015</p>
-                        <p class="text-muted">Más de 10 años garantizando seguridad y comodidad en cada viaje.</p>
-                        <button class="btn btn-secondary btn-sm close-preview-btn">
+                        <!-- Editar Datos -->
+                        <div class="mb-3">
+                            <label for="edit-name" class="form-label">Nombre:</label>
+                            <input type="text" id="edit-name" class="form-control" value="Juan Pérez">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-role" class="form-label">Rol:</label>
+                            <input type="text" id="edit-role" class="form-control" value="Conductor Senior">
+                        </div>
+                        <label for="upload-image" class="form-label mt-3">Cambiar Imagen:</label>
+                        <input type="file" id="upload-image" class="form-control mb-3" accept="image/*">
+                        <button class="btn btn-secondary btn-sm save-details-btn">
+                            <i class="fas fa-save me-2"></i>Guardar Cambios
+                        </button>
+                        <button class="btn btn-danger btn-sm close-preview-btn mt-3">
                             <i class="fas fa-times me-2"></i>Cerrar
                         </button>
                     </div>
@@ -101,8 +111,45 @@
     $(document).ready(function () {
         // Mostrar detalles del chofer
         $(".view-details-btn").click(function () {
-            const preview = $(this).closest(".driver-card").find(".driver-preview");
+            const card = $(this).closest(".driver-card");
+            const preview = card.find(".driver-preview");
+            const name = card.find(".driver-name").text();
+            const role = card.find(".driver-role").text();
+
+            // Actualizar campos de la vista previa
+            preview.find("#edit-name").val(name);
+            preview.find("#edit-role").val(role);
             preview.fadeIn(300).css("display", "flex");
+        });
+
+        // Guardar cambios
+        $(".save-details-btn").click(function () {
+            const preview = $(this).closest(".driver-preview");
+            const card = preview.closest(".driver-card");
+
+            // Obtener datos actualizados
+            const newName = preview.find("#edit-name").val();
+            const newRole = preview.find("#edit-role").val();
+            const previewImage = preview.find(".preview-image").attr("src");
+
+            // Actualizar tarjeta con nuevos datos
+            card.find(".driver-name").text(newName);
+            card.find(".driver-role").text(newRole);
+            card.find(".driver-image").attr("src", previewImage);
+
+            alert("Los datos del chofer han sido actualizados.");
+        });
+
+        // Cambiar la imagen
+        $("#upload-image").on("change", function () {
+            const reader = new FileReader();
+            const previewImage = $(this).closest(".driver-preview").find(".preview-image");
+
+            reader.onload = function (e) {
+                previewImage.attr("src", e.target.result); // Cambiar la imagen en la vista previa
+            };
+
+            reader.readAsDataURL(this.files[0]);
         });
 
         // Ocultar detalles del chofer

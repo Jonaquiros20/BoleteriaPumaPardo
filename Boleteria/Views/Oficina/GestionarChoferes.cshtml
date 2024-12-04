@@ -1,37 +1,139 @@
 ﻿@{
-    ViewData["Title"] = "Gestionar Administración";
+    ViewData["Title"] = "Gestionar Choferes";
 }
 
 <div class="container">
     <h1 class="text-center text-primary mt-4">Gestionar Administración</h1>
     <p class="text-center lead">Aquí puedes agregar, editar o eliminar Administrativos de la empresa registrados en el sistema.</p>
 
+    <!-- Botón para agregar nuevo administrativo -->
     <div class="mt-4">
-        <!-- Espacio para funcionalidades -->
-        <button class="btn btn-success mb-3">Agregar Nuevo Administrativo </button>
+        <button id="btnAddAdmin" class="btn btn-success mb-3">Agregar Nuevo Administrativo</button>
+    </div>
 
-        <!-- Tabla para listar choferes -->
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Juan Pérez</td>
-                    <td>8888-9999</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm">Editar</button>
-                        <button class="btn btn-danger btn-sm">Eliminar</button>
-                    </td>
-                </tr>
-                <!-- Más registros -->
-            </tbody>
-        </table>
+    <!-- Tabla para listar administrativos -->
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="adminList">
+            <tr>
+                <td>1</td>
+                <td>Juan Pérez</td>
+                <td>8888-9999</td>
+                <td>
+                    <button class="btn btn-primary btn-sm btnEdit">Editar</button>
+                    <button class="btn btn-danger btn-sm btnDelete">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal para agregar/editar administrativo -->
+<div id="adminModal" class="modal hidden">
+    <div class="modal-content">
+        <span id="btnCloseModal" class="close">&times;</span>
+        <h3 id="modalTitle" class="text-center text-primary">Agregar Administrativo</h3>
+        <form id="adminForm">
+            <div class="mb-3">
+                <label for="adminName" class="form-label">Nombre:</label>
+                <input type="text" id="adminName" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="adminPhone" class="form-label">Teléfono:</label>
+                <input type="tel" id="adminPhone" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </form>
     </div>
 </div>
+
+<script>
+    /**********************************************
+    *             FUNCIONES INTERACTIVAS          *
+    **********************************************/
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnAddAdmin = document.getElementById("btnAddAdmin");
+        const adminModal = document.getElementById("adminModal");
+        const btnCloseModal = document.getElementById("btnCloseModal");
+        const adminForm = document.getElementById("adminForm");
+
+        // Abrir modal
+        btnAddAdmin.addEventListener("click", () => {
+            adminModal.classList.remove("hidden");
+            adminModal.style.transition = "transform 0.3s, opacity 0.3s";
+            adminModal.style.transform = "scale(1)";
+        });
+
+        // Cerrar modal
+        btnCloseModal.addEventListener("click", () => {
+            adminModal.style.transform = "scale(0.8)";
+            adminModal.style.opacity = "0";
+            setTimeout(() => adminModal.classList.add("hidden"), 300);
+        });
+
+        // Funcionalidades de botones (solo demostrativas)
+        document.querySelectorAll(".btnEdit").forEach((btn) =>
+            btn.addEventListener("click", () => {
+                alert("Editar funcionalidad pendiente");
+            })
+        );
+
+        document.querySelectorAll(".btnDelete").forEach((btn) =>
+            btn.addEventListener("click", () => {
+                if (confirm("¿Está seguro de eliminar este registro?")) {
+                    alert("Registro eliminado");
+                }
+            })
+        );
+
+        // Envío del formulario
+        adminForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert("Datos guardados correctamente");
+            adminModal.style.transform = "scale(0.8)";
+            adminModal.style.opacity = "0";
+            setTimeout(() => adminModal.classList.add("hidden"), 300);
+            adminForm.reset();
+        });
+    });
+</script>
+
+<style>
+    /**********************************************
+            *              ESTILOS PERSONALIZADOS         *
+            **********************************************/
+    .modal.hidden {
+        display: none;
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        opacity: 1;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+</style>

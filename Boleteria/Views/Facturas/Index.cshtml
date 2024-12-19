@@ -184,6 +184,7 @@
             doc.text(`Factura: ${factura.factura}\nProveedor: ${factura.proveedor}\nTotal: ₡${factura.total}`, 10, 10);
             const pdf = doc.output("blob");
             window.open(URL.createObjectURL(pdf), "_blank");
+
         }
     </script>
 </body>

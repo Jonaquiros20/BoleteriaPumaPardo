@@ -96,6 +96,21 @@
                     transform: translateY(-2px);
                 }
 
+        .search {
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+            .search input {
+                width: 100%;
+                max-width: 400px;
+                padding: 0.8rem;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1rem;
+            }
+
         button {
             padding: 0.5rem 1rem;
             background-color: #e74c3c;
@@ -109,6 +124,14 @@
             button:hover {
                 background-color: #c0392b;
             }
+
+        .edit {
+            background-color: #3498db;
+        }
+
+            .edit:hover {
+                background-color: #2980b9;
+            }
     </style>
 </head>
 <body>
@@ -117,6 +140,9 @@
     </header>
     <div class="container">
         <h2>Lista de Inventario</h2>
+        <div class="search">
+            <input type="text" id="search" placeholder="Buscar por nombre o categoría" oninput="searchProduct()">
+        </div>
         <table>
             <thead>
                 <tr>
@@ -147,7 +173,8 @@
     </div>
 
     <script>
-        const inventory = [];
+        let inventory = [];
+        let editingIndex = null;
 
         function renderTable() {
             const table = document.getElementById('inventory-table');
@@ -160,6 +187,7 @@
                     <td>${item.category}</td>
                     <td>${item.quantity}</td>
                     <td>
+                        <button class="edit" onclick="editProduct(${index})">Editar</button>
                         <button onclick="removeProduct(${index})">Eliminar</button>
                     </td>
                 `;
@@ -177,9 +205,23 @@
                 return;
             }
 
-            inventory.push({ name, category, quantity });
+            if (editingIndex !== null) {
+                inventory[editingIndex] = { name, category, quantity };
+                editingIndex = null;
+            } else {
+                inventory.push({ name, category, quantity });
+            }
+
             renderTable();
             clearForm();
+        }
+
+        function editProduct(index) {
+            const product = inventory[index];
+            document.getElementById('product-name').value = product.name;
+            document.getElementById('product-category').value = product.category;
+            document.getElementById('product-quantity').value = product.quantity;
+            editingIndex = index;
         }
 
         function removeProduct(index) {
@@ -192,6 +234,32 @@
             document.getElementById('product-category').value = '';
             document.getElementById('product-quantity').value = '';
         }
+
+        function searchProduct() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filteredInventory = inventory.filter(item =>
+                item.name.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            );
+
+            const table = document.getElementById('inventory-table');
+            table.innerHTML = '';
+
+            filteredInventory.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.category}</td>
+                    <td>${item.quantity}</td>
+                    <td>
+                        <button class="edit" onclick="editProduct(${index})">Editar</button>
+                        <button onclick="removeProduct(${index})">Eliminar</button>
+                    </td>
+                `;
+                table.appendChild(row);
+            });
+        }
+
     </script>
 </body>
 </html>
